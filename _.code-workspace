@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../core"
+		},
+    {
+      "path": "../../plugins/advanced-custom-fields-pro"
+    }
+	],
+	"settings": {}
+}

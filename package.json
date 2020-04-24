@@ -1,0 +1,49 @@
+{
+  "name": "build-frontend-assets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build process for frontend assets",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "node parcel-bundler.js -f \"assets-src/*.js\" -o \"assets\"",
+    "watch": "npm run bundle",
+    "build": "npm run bundle -- --production"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "watchreload": {
+    "files": "**/*.php"
+  },
+  "sass": {
+    "sourceMapEmbed": true
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": true
+    }
+  },
+  "author": "Rasso Hilber",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.6.4",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "cssnano": "^4.0.5",
+    "find-parent-dir": "^0.3.0",
+    "glob": "^7.1.4",
+    "minimist": "^1.2.0",
+    "node-sass": "^4.12.0",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-modernizr": "^1.1.4",
+    "parcel-plugin-watch-reload": "*",
+    "regenerator-runtime": "^0.12.1",
+    "sass": "^1.23.0"
+  },
+  "dependencies": {
+    "feather-icons": "^4.24.1"
+  }
+}
