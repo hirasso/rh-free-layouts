@@ -1,38 +1,9 @@
 <?php
 
-namespace R;
+namespace R\FreeLayouts;
 
-
-/**
- * Template function to render and return a free layout item
- *
- * @param int $post_id Post ID.
- * @param int $layout_id
- * @param [type] $content
- * @return void
- */
-function wrap_free_layout_item( $item, $content ) {
-  global $freeLayout;
-  $post_id = get_queried_object_id();
-  $layout_id = $item->rh_free_layout ?? false;
-  if( !$layout_id ) {
-    return "This item doesn't support free layout";
-  }
-  $layout = $freeLayout->get_free_layout($post_id, $layout_id);
-  ob_start() ?>
-
-  <div class="free-layout_item-wrap">
-  <div class="free-layout_item"
-    <?= $layout ? "style='$layout'" : '' ?>
-    data-layout-id="<?= $layout_id ?>" 
-    data-post-id="<?= $post_id ?>">
-
-    <?= $content ?>
-
-  </div><!-- /layout_item -->
-  </div><!-- /layout_item-wrap -->
-  
-  <?php return ob_get_clean();
+function ns($function) {
+  return __NAMESPACE__ . "\\$function";
 }
 
 class FreeLayout {
@@ -183,6 +154,5 @@ class FreeLayout {
     <?php echo ob_get_clean();
   }
 }
+global $freeLayout;
 $freeLayout = new FreeLayout();
-
-

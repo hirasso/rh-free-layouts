@@ -1,6 +1,6 @@
 <?php
 
-namespace R;
+namespace R\FreeLayouts;
 
 acf_register_field_type( ns('acf_field_free_layout') );
 acf_register_field_type( ns('acf_field_reset_free_layouts') );
