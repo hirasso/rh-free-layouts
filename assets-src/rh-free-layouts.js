@@ -18,7 +18,6 @@ export default class PluginClass extends PluginBase {
     super( el, options );
     
     this.$items = this.$el.find(options.itemSelector);
-    
     if( !this.$items.length ) {
       this.destroy();
       return;
@@ -58,62 +57,95 @@ export default class PluginClass extends PluginBase {
       
       $el.draggable({
         iframeFix: true,
-        cancel: '.ui-resizable-handle',
+        cancel: 'a',
         helper: (event) => {
-          
-          $el.css({
-            top: parseFloat( $el.css('margin-top') ) + parseFloat( $el.css('top') ),
-            left: parseFloat( $el.css('margin-left') ) + parseFloat( $el.css('left') ),
-            margin: 0
-          });
-
-          $('#div_containment').remove();
-          
-          let $containmentDiv = $('<div id="div_containment"></div>');
-          let $parent = $el.parent();
-          let rect = {
-            top: $parent.offset().top,
-            left: $parent.offset().left,
-            width: $parent.width(),
-            height: $el.height() + 300,
-          }
-
-          if( index > 0 ) {
-            let $previousItem = this.$items.eq(index - 1);
-            rect.top = $previousItem.offset().top;
-            rect.height += $previousItem.height();
-          }
-
-          $containmentDiv.css({
-            top: rect.top,
-            left: rect.left,
-            width: rect.width,
-            height: rect.height,
-            position: 'absolute',
-            zIndex: 2,
-            pointerEvents: 'none',
-            background: 'rgba(0,200,0,0.1)',
-          })
-          $containmentDiv.appendTo($('body'));
-
+          this.injectDraggableContainment( $el, index );
           return $el;
         },
         scroll: true,
         stop: () => this.afterEditLayout( $el ),
-        containment: "#div_containment", 
+        containment: "#div_containment",
         
       });
 
       $el.resizable({
         autoHide: true,
         handles: 'e, w',
-        stop: () => this.afterEditLayout( $el )
+        stop: () => this.afterEditLayout( $el ),
+        resize: (event, ui) => {
+          let marginLeft = parseFloat($el.css('marginLeft'));
+          let direction = $el.data('resizing-direction');
+          
+          if( marginLeft ) {
+            ui.position.left += marginLeft;
+            ui.originalPosition.left += marginLeft;
+            $el.css('margin-left', '');
+          }
+          ui.position.left = Math.max( 0, ui.position.left );
+          
+          if( event.altKey ) {
+            let leftDiff = ui.originalPosition.left - ui.position.left;
+            let widthDiff = ui.originalSize.width - ui.size.width;
+            
+            switch( direction ) {
+              case 'w':
+                ui.size.width += leftDiff;
+                ui.size.width = Math.min($el.parent().width() - ui.position.left, ui.size.width);
+                break;
+              case 'e':
+                // TODO support centered resizing on 'e' handle
+                break;
+            }
+          }
+
+        }
       })
 
       $el.find('.ui-resizable-w').html(feather.icons['arrow-left'].toSvg());
       $el.find('.ui-resizable-e').html(feather.icons['arrow-right'].toSvg());
+      $el.find('.ui-resizable-handle').mousedown(e => {
+        let currentDirection = $(e.currentTarget).hasClass('ui-resizable-w') ? 'w' : 'e';
+        $el.attr('data-resizing-direction', currentDirection);
+      })
     });
 
+  }
+
+  injectDraggableContainment( $el, index ) {
+    $el.css({
+      top: parseFloat( $el.css('margin-top') ) + parseFloat( $el.css('top') ),
+      left: parseFloat( $el.css('margin-left') ) + parseFloat( $el.css('left') ),
+      margin: 0
+    });
+
+    $('#div_containment').remove();
+
+    let $containmentDiv = $('<div id="div_containment"></div>');
+    let $parent = $el.parent();
+    let rect = {
+      top: $parent.offset().top,
+      left: $parent.offset().left,
+      width: $parent.width(),
+      height: $el.height() + 300,
+    }
+
+    if( index > 0 ) {
+      let $previousItem = this.$items.eq(index - 1);
+      rect.top = $previousItem.offset().top;
+      rect.height += $previousItem.height();
+    }
+
+    $containmentDiv.css({
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      position: 'absolute',
+      zIndex: 2,
+      pointerEvents: 'none',
+      background: 'rgba(0,200,0,0.1)',
+    })
+    $containmentDiv.appendTo($('body'));
   }
 
   initLayoutActions( $el ) {
@@ -240,6 +272,9 @@ export default class PluginClass extends PluginBase {
 
   destroy() {
     super.destroy();
+    this.$items.each((i, el) => {
+
+    })
     $('.free-layout_notification').remove();
   }
 
@@ -251,8 +286,7 @@ export default class PluginClass extends PluginBase {
  */
 PluginClass.DEFAULTS = {
   itemSelector: '.free-layout_item',
-  itemWrapSelector: '.free-layout_item-wrap',
-  ajaxUrl: GLOBALS.ajaxUrl
+  ajaxUrl: FreeLayouts.ajaxUrl
 };
 
 /**

@@ -52,9 +52,14 @@ class FreeLayout {
    */
   function enqueue_assets() {
     wp_enqueue_style('rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.css'), [], null, 'all');
-    if( current_user_can('edit_posts') ) {
-      wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.js'), ['jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'], null, true );
-    }
+    if( !current_user_can('edit_posts') ) return;
+    
+    wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.js'), ['jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'], null, true );
+    $settings = [
+      'ajaxUrl' => admin_url('admin-ajax.php'),
+    ];
+
+    wp_localize_script( 'rh-free-layouts', 'FreeLayouts', $settings );
   }
 
 
