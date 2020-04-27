@@ -1,16 +1,14 @@
 <?php
 
-namespace R\FreeLayouts;
-
-acf_register_field_type( ns('acf_field_free_layout') );
-acf_register_field_type( ns('acf_field_reset_free_layouts') );
+acf_register_field_type( 'rh_acf_field_free_layout' );
+acf_register_field_type( 'rh_acf_field_reset_free_layouts' );
 
 /**
  * Register a custom ACF field type
  * 
  * @url reference https://github.com/AdvancedCustomFields/acf-field-type-template/blob/master/acf-FIELD-NAME/fields/class-NAMESPACE-acf-field-FIELD-NAME-v5.php
  */
-class acf_field_free_layout extends \acf_field {
+class rh_acf_field_free_layout extends \acf_field {
 	
 	function initialize() {
 		// vars
@@ -87,7 +85,7 @@ class acf_field_free_layout extends \acf_field {
  * 
  * @url reference https://github.com/AdvancedCustomFields/acf-field-type-template/blob/master/acf-FIELD-NAME/fields/class-NAMESPACE-acf-field-FIELD-NAME-v5.php
  */
-class acf_field_reset_free_layouts extends \acf_field_true_false {
+class rh_acf_field_reset_free_layouts extends \acf_field_true_false {
 	
 	function initialize() {
 		// vars
