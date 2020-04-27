@@ -1,6 +1,4 @@
 .DS_Store
 .cache
-assets
 node_modules
 npm-debug.log
-lib/vendor
