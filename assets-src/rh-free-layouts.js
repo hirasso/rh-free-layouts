@@ -74,7 +74,7 @@ export default class PluginClass extends PluginBase {
         stop: () => this.afterEditLayout( $el ),
         resize: (event, ui) => {
           let marginLeft = parseFloat($el.css('marginLeft'));
-          let direction = $el.data('resizing-direction');
+          let activeHandle = $el.data('active-handle');
           
           if( marginLeft ) {
             ui.position.left += marginLeft;
@@ -85,18 +85,21 @@ export default class PluginClass extends PluginBase {
           
           if( event.altKey ) {
             let leftDiff = ui.originalPosition.left - ui.position.left;
-            let widthDiff = ui.originalSize.width - ui.size.width;
-            
-            switch( direction ) {
+            let widthDiff = ui.size.width - ui.originalSize.width;
+
+            switch( activeHandle ) {
               case 'w':
                 ui.size.width += leftDiff;
-                ui.size.width = Math.min($el.parent().width() - ui.position.left, ui.size.width);
                 break;
               case 'e':
-                // TODO support centered resizing on 'e' handle
+                // @TODO: support centered resizing on 'e' handle
+                // reference: https://stackoverflow.com/questions/26117840/jqueryui-resize-from-center-handle-glitch
                 break;
             }
+
           }
+
+          ui.size.width = Math.min($el.parent().width() - ui.position.left, ui.size.width);
 
         }
       })
@@ -105,7 +108,7 @@ export default class PluginClass extends PluginBase {
       $el.find('.ui-resizable-e').html(feather.icons['arrow-right'].toSvg());
       $el.find('.ui-resizable-handle').mousedown(e => {
         let currentDirection = $(e.currentTarget).hasClass('ui-resizable-w') ? 'w' : 'e';
-        $el.attr('data-resizing-direction', currentDirection);
+        $el.attr('data-active-handle', currentDirection);
       })
     });
 
