@@ -16,7 +16,7 @@ class FreeLayout {
     add_action('plugins_loaded', [$this, 'connect_to_rh_updater']);
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts'], 9);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], 9);
   }
 
   /**
@@ -45,11 +45,19 @@ class FreeLayout {
     }
   }
 
-
-  function enqueue_scripts() {
-    if( !is_user_logged_in() ) return;
-    wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/free-layouts.js'), array('jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'), null, true );
+  /**
+   * Enqueue assets
+   *
+   * @return void
+   */
+  function enqueue_assets() {
+    wp_enqueue_style('rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.css'), [], null, 'all');
+    if( current_user_can('edit_posts') ) {
+      wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.js'), ['jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'], null, true );
+    }
   }
+
+
 
   /**
    * Helper function to get versioned asset urls

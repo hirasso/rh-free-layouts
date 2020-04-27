@@ -4,9 +4,11 @@
  * Author URI: https://rassohilber.com
  */
 
+
 global.jQuery = $ = window.jQuery;
 
-import plugin, { PluginBase } from '../utils/plugin';
+import './scss/rh-free-layouts.scss';
+import plugin, { PluginBase } from './js/plugin';
 import feather from 'feather-icons';
 
 export default class PluginClass extends PluginBase {
@@ -56,6 +58,7 @@ export default class PluginClass extends PluginBase {
       
       $el.draggable({
         iframeFix: true,
+        cancel: '.ui-resizable-handle',
         helper: (event) => {
           
           $el.css({
