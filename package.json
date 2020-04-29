@@ -39,7 +39,6 @@
     "node-sass": "^4.12.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-modernizr": "^1.1.4",
-    "parcel-plugin-watch-reload": "*",
     "regenerator-runtime": "^0.12.1",
     "sass": "^1.23.0"
   },

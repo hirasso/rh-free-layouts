@@ -68,7 +68,6 @@ function detectHTTPS() {
 const options = {
   outDir: outDir,
   publicUrl: './',
-  sourceMaps: process.env.NODE_ENV !== 'production',
   https: https
 }
 
