@@ -71,37 +71,7 @@ export default class PluginClass extends PluginBase {
       $el.resizable({
         autoHide: true,
         handles: 'e, w',
-        stop: () => this.afterEditLayout( $el ),
-        resize: (event, ui) => {
-          let marginLeft = parseFloat($el.css('marginLeft'));
-          let activeHandle = $el.data('active-handle');
-          
-          if( marginLeft ) {
-            ui.position.left += marginLeft;
-            ui.originalPosition.left += marginLeft;
-            $el.css('margin-left', '');
-          }
-          ui.position.left = Math.max( 0, ui.position.left );
-          
-          if( event.altKey ) {
-            let leftDiff = ui.originalPosition.left - ui.position.left;
-            let widthDiff = ui.size.width - ui.originalSize.width;
-
-            switch( activeHandle ) {
-              case 'w':
-                ui.size.width += leftDiff;
-                break;
-              case 'e':
-                // @TODO: support centered resizing on 'e' handle
-                // reference: https://stackoverflow.com/questions/26117840/jqueryui-resize-from-center-handle-glitch
-                break;
-            }
-
-          }
-
-          ui.size.width = Math.min($el.parent().width() - ui.position.left, ui.size.width);
-
-        }
+        stop: () => this.afterEditLayout( $el )
       })
 
       $el.find('.ui-resizable-w').html(feather.icons['arrow-left'].toSvg());
@@ -256,6 +226,7 @@ export default class PluginClass extends PluginBase {
   showNotification( response ) {
     let message = ((response || {}).data || {}).message || 'Database updated';
     clearTimeout( this.notificationsTimeout );
+    $('.free-layout_notification').remove();
     let $notification = $('<div></div>');
     $notification
       .appendTo('body')

@@ -6,12 +6,12 @@
  @media screen and (hover: hover), screen and (min--moz-device-pixel-ratio: 0), screen and (-ms-high-contrast:none) { &:hover { @content; } }
 }
 
-$ui-size: 2rem;
+$ui-size: 30px;
 
 .free-layout_notification {
   position: fixed;
-  bottom: 1em;
-  right: 1em;
+  bottom: 25px;
+  right: 25px;
   background: #fff;
   border-radius: 4px;
   padding: 0 1.3em;
@@ -20,7 +20,7 @@ $ui-size: 2rem;
   box-shadow: 2px 2px 0.5em rgba(0,0,0,0.2);
   transform: translateX(calc(100% + 2em));
   z-index: 3;
-  font-size: 12px;
+  font-size: 13px;
   transition: transform 200ms ease-out;
   cursor: no-drop;
 }
@@ -55,7 +55,7 @@ $ui-size: 2rem;
   position: absolute;
   z-index: 2;
   color: white;
-  font-size: 1rem;
+  font-size: 10px;
   text-align: center;
   top: 0;
   left: 0;
@@ -73,7 +73,7 @@ $ui-size: 2rem;
   transition: opacity 150ms;
 }
 .free-layout_item_handle > * {
-  font-size: 12px;
+  font-size: inherit;
   font-family: Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   color: inherit !important;

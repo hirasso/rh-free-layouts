@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -12,11 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class FreeLayout {
 
+  private $is_dev = true;
+
   function __construct() {
     add_action('plugins_loaded', [$this, 'connect_to_rh_updater']);
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], PHP_INT_MAX);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], $this->is_dev ? 10 : PHP_INT_MAX);
   }
 
   /**
