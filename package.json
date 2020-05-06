@@ -5,6 +5,7 @@
   "description": "Build process for frontend assets",
   "main": "index.js",
   "scripts": {
+    "preinstall": "git config core.hooksPath .githooks; echo 'added .githooks to git'",
     "bundle": "node parcel-bundler.js -f \"assets-src/*.js\" -o \"assets\"",
     "watch": "npm run bundle",
     "build": "npm run bundle -- --production"
@@ -40,6 +41,7 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-modernizr": "^1.1.4",
     "regenerator-runtime": "^0.12.1",
+    "rimraf": "^3.0.2",
     "sass": "^1.23.0"
   },
   "dependencies": {

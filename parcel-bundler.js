@@ -17,6 +17,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const Bundler = require('parcel-bundler');
 const findParentDir = require('find-parent-dir');
 const glob = require('glob');
+const rimraf = require('rimraf');
 
 /**
  * Get and transform arguments
@@ -83,4 +84,4 @@ async function runBundler( files ) {
 /**
  * Initialize the bundler
  */
-runBundler( files );
+rimraf('./assets', {}, () => runBundler( files ));
