@@ -12,21 +12,17 @@ import feather from 'feather-icons';
 
 export default class PluginClass extends PluginBase {
 
-  constructor( el, options ) {
+  constructor( el = document.body, options = {} ) {
 
     super( el, options );
-    
-    this.$items = this.$el.find(options.itemSelector);
+
+    this.$el = $(el);
+
+    this.$items = this.$el.find('.free-layout_item');
     if( !this.$items.length ) {
       this.destroy();
       return;
     }
-
-    if( this.$el.hasClass('free-layout') ) {
-      return;
-    }
-
-    this.$el.addClass('free-layout');
 
     this.initEditMode();
 
@@ -102,6 +98,7 @@ export default class PluginClass extends PluginBase {
 
     let $containmentDiv = $('<div id="div_containment"></div>');
     let $parent = $el.parent();
+    
     let rect = {
       top: $parent.offset().top,
       left: $parent.offset().left,
@@ -112,7 +109,7 @@ export default class PluginClass extends PluginBase {
     if( index > 0 ) {
       let $previousItem = this.$items.eq(index - 1);
       rect.top = $previousItem.offset().top;
-      rect.height += $previousItem.height();
+      rect.height += rect.top + $previousItem.height();
     }
 
     $containmentDiv.css({
@@ -125,7 +122,7 @@ export default class PluginClass extends PluginBase {
       pointerEvents: 'none',
       background: 'rgba(0,200,0,0.1)',
     })
-    $containmentDiv.appendTo($('body'));
+    $('body').append( $containmentDiv );
   }
 
   /**
@@ -242,7 +239,7 @@ export default class PluginClass extends PluginBase {
 
     $.ajax({
       method: "post",
-      url: this.options.ajaxUrl,
+      url: RHFL.ajaxUrl,
       data: {
         action: 'update_free_layout',
         layout_id: layoutId,
@@ -278,24 +275,17 @@ export default class PluginClass extends PluginBase {
 
   destroy() {
     super.destroy();
-    this.$items.each((i, el) => {
-
-    })
     $('.free-layout_notification').remove();
   }
 
 }
 
 /**
- * Defaults
- * @type {{color: string, status: number}}
- */
-PluginClass.DEFAULTS = {
-  itemSelector: '.free-layout_item',
-  ajaxUrl: RHFL.ajaxUrl
-};
-
-/**
  * make jQuery Plugin
  */
-plugin('freelayout', PluginClass, true);
+plugin('freelayouts', PluginClass, true);
+
+/**
+ * Register for direct access to class
+ */
+RHFL.Editor = PluginClass;
