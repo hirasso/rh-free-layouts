@@ -4,7 +4,6 @@
  * Author URI: https://rassohilber.com
  */
 
-
 global.jQuery = $ = window.jQuery;
 
 import './scss/rh-free-layouts.scss';
@@ -33,6 +32,9 @@ export default class PluginClass extends PluginBase {
 
   }
 
+  /**
+   * Inits the edit mode
+   */
   initEditMode() {
 
     this.$items.each((index, el) => {
@@ -84,6 +86,11 @@ export default class PluginClass extends PluginBase {
 
   }
 
+  /**
+   * Injects the draggable containment element
+   * @param {*} $el 
+   * @param {*} index 
+   */
   injectDraggableContainment( $el, index ) {
     $el.css({
       top: parseFloat( $el.css('margin-top') ) + parseFloat( $el.css('top') ),
@@ -121,6 +128,10 @@ export default class PluginClass extends PluginBase {
     $containmentDiv.appendTo($('body'));
   }
 
+  /**
+   * Custom layout item actions (reset/full-width)
+   * @param {*} $el 
+   */
   initLayoutActions( $el ) {
     $el.find('[data-layout-action]').each((i, el) => {
       let $link = $(el);
@@ -139,17 +150,29 @@ export default class PluginClass extends PluginBase {
     })
   }
 
+  /**
+   * Fired after a layout item has been edited
+   * @param {*} $el 
+   */
   afterEditLayout( $el ) {
     $('#div_containment').remove();
     this.convertAndSaveLayoutItem( $el );
     $el.trigger('layout:updated');
   }
 
+  /**
+   * Resets a layout item
+   * @param {*} $el 
+   */
   resetLayoutItem( $el ) {
     $el.removeAttr('style');
     this.afterEditLayout( $el );
   }
 
+  /**
+   * Sets a layout item to full width
+   * @param {*} $el 
+   */
   setItemFullWidth( $el ) {
     $el.css({
       marginLeft: "0%",
@@ -158,6 +181,10 @@ export default class PluginClass extends PluginBase {
     this.afterEditLayout( $el );
   }
 
+  /**
+   * Converts a layout item position and saves it
+   * @param {*} $el 
+   */
   convertAndSaveLayoutItem( $el ) {
 
     let layoutId = $el.attr('data-layout-id');
@@ -205,6 +232,12 @@ export default class PluginClass extends PluginBase {
   
   }
 
+  /**
+   * Updates the database
+   * @param {*} layoutId 
+   * @param {*} postId 
+   * @param {*} css 
+   */
   updateDatabase( layoutId, postId, css = '' ) {
 
     $.ajax({
@@ -217,7 +250,6 @@ export default class PluginClass extends PluginBase {
         css: css
       },
       success: response =>  {
-        console.log(response);
         this.showNotification( response );
       }
     });
@@ -260,7 +292,7 @@ export default class PluginClass extends PluginBase {
  */
 PluginClass.DEFAULTS = {
   itemSelector: '.free-layout_item',
-  ajaxUrl: FreeLayouts.ajaxUrl
+  ajaxUrl: RHFL.ajaxUrl
 };
 
 /**

@@ -29,22 +29,14 @@
   "author": "Rasso Hilber",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^9.6.4",
+    "autoprefixer": "^9.7.6",
     "babel-core": "^6.26.3",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "cssnano": "^4.0.5",
-    "find-parent-dir": "^0.3.0",
-    "glob": "^7.1.4",
-    "minimist": "^1.2.0",
-    "node-sass": "^4.12.0",
     "parcel-bundler": "^1.12.4",
-    "parcel-plugin-modernizr": "^1.1.4",
-    "regenerator-runtime": "^0.12.1",
-    "rimraf": "^3.0.2",
-    "sass": "^1.23.0"
+    "parcel-plugin-watch-reload": "^1.0.0",
+    "sass": "^1.26.5"
   },
   "dependencies": {
-    "feather-icons": "^4.24.1"
+    "feather-icons": "^4.28.0"
   }
 }

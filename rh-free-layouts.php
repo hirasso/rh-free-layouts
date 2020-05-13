@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -12,13 +12,20 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class FreeLayout {
 
-  private $is_dev = true;
-
   function __construct() {
     add_action('plugins_loaded', [$this, 'connect_to_rh_updater']);
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], $this->is_dev ? 10 : PHP_INT_MAX);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], $this->is_plugin_dev_mode() ? 10 : PHP_INT_MAX);
+  }
+
+  /**
+   * Checks if we are in plugin dev mode
+   *
+   * @return boolean
+   */
+  private function is_plugin_dev_mode() {
+    return defined('RHFL_DEV_MODE') && RHFL_DEV_MODE === true;
   }
 
   /**
@@ -61,7 +68,7 @@ class FreeLayout {
       'ajaxUrl' => admin_url('admin-ajax.php'),
     ];
 
-    wp_localize_script( 'rh-free-layouts', 'FreeLayouts', $settings );
+    wp_localize_script( 'rh-free-layouts', 'RHFL', $settings );
   }
 
 
@@ -109,8 +116,8 @@ class FreeLayout {
    * @param int $layout_id
    * @return void
    */
-  function get_free_layout( $layout_id, $post_id ) {
-    $layouts = $this->get_free_layouts($post_id);
+  function get_layout( $layout_id, $post_id = null ) {
+    $layouts = $this->get_layouts($post_id);
     return $layouts[$layout_id] ?? false;
   }
 
@@ -120,7 +127,8 @@ class FreeLayout {
    * @param int $post_id Post ID.
    * @return array
    */
-  function get_free_layouts($post_id) {
+  function get_layouts($post_id = null) {
+    $post_id = $post_id ?? get_queried_object_id();
     $layouts = get_post_meta($post_id, '_free_layouts', true);
     return is_array($layouts) ? $layouts : [];
     // return (array) get_field('_free_layouts', $post_id);
@@ -157,7 +165,7 @@ class FreeLayout {
    * @return void
    */
   function update_free_layout_item( $layout_id, $post_id, $style ) {
-    $layouts = $this->get_free_layouts($post_id);
+    $layouts = $this->get_layouts($post_id);
     $layouts[$layout_id] = $style;
     $this->update_free_layouts($post_id, $layouts);
   }
@@ -170,7 +178,7 @@ class FreeLayout {
    * @return void
    */
   function reset_free_layout_item( $layout_id, $post_id ) {
-    $layouts = $this->get_free_layouts($post_id);
+    $layouts = $this->get_layouts($post_id);
     unset($layouts[$layout_id]);
     $this->update_free_layouts($post_id, $layouts);
   }
@@ -214,6 +222,12 @@ class FreeLayout {
     ]);
   }
 
+  /**
+   * Renders custom field type styles
+   *
+   * @param [type] $field
+   * @return void
+   */
   function render_field_group_styles( $field ) {
     $selector = str_replace('_', '-', $field->name);
     ob_start() ?>
@@ -241,14 +255,14 @@ $freeLayout = new FreeLayout();
  * @param [type] $content
  * @return void
  */
-function rh_free_layout_wrap( $item, $content ) {
+function rhfl_wrap_item( $item, $content, $post_id = null ) {
   global $freeLayout;
-  $post_id = get_queried_object_id();
+  $post_id = $post_id ?? get_queried_object_id();
   $layout_id = $item->rh_free_layout ?? false;
   if( !$layout_id ) {
     return "This item doesn't support free layout";
   }
-  $layout = $freeLayout->get_free_layout($layout_id, $post_id);
+  $layout = $freeLayout->get_layout($layout_id, $post_id);
   ob_start() ?>
 
   <div class="free-layout_item-wrap">
@@ -263,4 +277,18 @@ function rh_free_layout_wrap( $item, $content ) {
   </div><!-- /layout_item-wrap -->
   
   <?php return ob_get_clean();
+}
+
+/**
+ * Returns the layout for an item
+ *
+ * @param [type] $item
+ * @param [type] $post_id
+ * @return void
+ */
+function rhfl_get_layout($item, $post_id = null) {
+  global $freeLayout;
+  $layout_id = $item->rh_free_layout ?? false;
+  if( !$layout_id ) return '';
+  return $freeLayout->get_layout($layout_id, $post_id);
 }
