@@ -6,7 +6,7 @@
 
 - renamed API functions
 - introduce check for `RHFL_DEV_MODE`
-– added `readme.md` with instructions
+- added `readme.md` with instructions
 
 ## 1.0.2 — 2020-05-06
 
