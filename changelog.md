@@ -1,3 +1,7 @@
+## 1.1.1 - 2020-05-14
+
+- added `scopeHoist: true` to production build, to fix HMR conflicts with themes or other plugins using parcel
+
 ## 1.0.3 - 2020-05-13
 
 - renamed API functions
