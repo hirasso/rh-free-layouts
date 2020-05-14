@@ -12,14 +12,15 @@
   },
   "babel": {
     "presets": [
-      "env"
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-transform-runtime"
     ]
   },
   "watchreload": {
     "files": "**/*.php"
-  },
-  "sass": {
-    "sourceMapEmbed": true
   },
   "postcss": {
     "plugins": {
@@ -29,11 +30,16 @@
   "author": "Rasso Hilber",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.6",
     "autoprefixer": "^9.7.6",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
+    "find-parent-dir": "^0.3.0",
+    "glob": "^7.1.6",
+    "minimist": "^1.2.5",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-watch-reload": "^1.0.0",
+    "rimraf": "^3.0.2",
     "sass": "^1.26.5"
   },
   "dependencies": {

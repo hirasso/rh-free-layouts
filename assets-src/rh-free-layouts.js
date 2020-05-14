@@ -280,6 +280,8 @@ export default class PluginClass extends PluginBase {
 
 }
 
+PluginClass.DEFAULTS = {};
+
 /**
  * make jQuery Plugin
  */

@@ -16,7 +16,7 @@ class FreeLayout {
     add_action('plugins_loaded', [$this, 'connect_to_rh_updater']);
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], $this->is_plugin_dev_mode() ? 10 : PHP_INT_MAX);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], 10);
   }
 
   /**

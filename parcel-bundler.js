@@ -1,5 +1,5 @@
 /**
- * Parcle Bundler Script with File watching
+ * Parcle Bundler Script
  * Author: Rasso Hilber
  * Author URL: https://rassohilber.com
  * License: MIT
@@ -25,17 +25,17 @@ const rimraf = require('rimraf');
 const files = argvToArray( 'f' );
 const https = argv.https ? detectHTTPS() : false;
 const outDir = argv.o ? argv.o : 'assets/dist';
-process.env.NODE_ENV = argv.production ? 'production' : 'development';
+const isProduction = !!argv.production;
+process.env.NODE_ENV = isProduction ? 'production' : 'development';
 
+if( !files ) console.warn('No entry files given.');
 /**
  * Get and transform string arguments to array
  */
 function argvToArray( key ) {
   let value = argv[key];
   let arr = value && value.length ? value.split(',') : false;
-  if( !arr ) {
-    return;
-  }
+  if( !arr ) return false;
   // trim the array entries
   return arr.map( entry => entry.trim() );
 }
@@ -69,7 +69,10 @@ function detectHTTPS() {
 const options = {
   outDir: outDir,
   publicUrl: './',
-  https: https
+  https: https,
+  sourceMaps: !isProduction,
+  // fixes issues with other parcel scripts and HMR on same page
+  scopeHoist: isProduction 
 }
 
 /**
