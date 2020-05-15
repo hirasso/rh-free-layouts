@@ -1,3 +1,7 @@
+## 1.2.0 - 2020-05-15
+
+- huge cleanup. Initiate JS from PHP :)
+
 ## 1.1.1 - 2020-05-14
 
 - added `scopeHoist: true` to production build, to fix HMR conflicts with themes or other plugins using parcel

@@ -9,16 +9,11 @@
 ```php
 <?php ob_start(); ?>
 <div class="my-module">This module will support free layout</div>
-<?php echo rhfl_wrap_item( $value, ob_get_clean(), $post_id ) ?>
+<?php echo function_exists('rhfl') ? rhfl()->wrap_item( $value, ob_get_clean() ) : ob_get_clean() ?>
 ```
 
-## Initiate the edit mode from your JS:
+## Initiate the edit mode from your template (after all items have been rendered):
 
-```javascript
-try { $(document).freelayouts() } catch(e) { console.warn( e ) }
-```
-...or
-
-```javascript
-try { new RHFL.Editor() } catch( e ) { console.warn( e ) }
+```php
+if( function_exists('rhfl') ) rhfl()->get_edit_mode_js();
 ```
