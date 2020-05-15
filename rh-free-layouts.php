@@ -7,16 +7,22 @@
  * Author URI: https://rassohilber.com
 **/
 
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+require_once(plugin_dir_path( __FILE__ ) . 'includes/class.singleton.php');
 
-class FreeLayout {
+class RHFreeLayouts extends RHSingleton {
 
+  /**
+   * Constructor
+   */
   function __construct() {
     add_action('plugins_loaded', [$this, 'connect_to_rh_updater']);
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_assets'], 10);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_style'], 10);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_script'], 10);
   }
 
   /**
@@ -33,7 +39,7 @@ class FreeLayout {
    *
    * @return void
    */
-  function connect_to_rh_updater() {
+  public function connect_to_rh_updater() {
     if( class_exists('\RH_Bitbucket_Updater') ) {
       new \RH_Bitbucket_Updater( __FILE__ );
     } else {
@@ -46,7 +52,7 @@ class FreeLayout {
    *
    * @return void
    */
-  function show_notice_missing_rh_updater() {
+  public function show_notice_missing_rh_updater() {
     global $rh_updater_notice_shown;
     if( !$rh_updater_notice_shown && current_user_can('activate_plugins') ) {
       $rh_updater_notice_shown = true;
@@ -55,23 +61,49 @@ class FreeLayout {
   }
 
   /**
-   * Enqueue assets
+   * Gets capability for layout editing
    *
    * @return void
    */
-  function enqueue_assets() {
+  private function get_capability() {
+    return apply_filters('rhfl/settings/capability', 'edit_posts');
+  }
+
+  /**
+   * Checks current users capability against plugin setting
+   *
+   * @return void
+   */
+  private function is_edit_mode_enabled() {
+    return current_user_can($this->get_capability());
+  }
+
+  /**
+   * Enqueue style
+   *
+   * @return void
+   */
+  public function enqueue_style() {
     wp_enqueue_style('rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.css'), [], null, 'all');
-    if( !current_user_can('edit_posts') ) return;
+  }
+
+  /**
+   * Enqueue scripts
+   *
+   * @return void
+   */
+  function enqueue_script() {
     
-    wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.js'), ['jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'], null, true );
+    if( !$this->is_edit_mode_enabled() ) return;
+
+    wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.js'), ['jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'], null, false );
     $settings = [
       'ajaxUrl' => admin_url('admin-ajax.php'),
+      'initEditMode' => false
     ];
 
     wp_localize_script( 'rh-free-layouts', 'RHFL', $settings );
   }
-
-
 
   /**
    * Helper function to get versioned asset urls
@@ -116,7 +148,7 @@ class FreeLayout {
    * @param int $layout_id
    * @return void
    */
-  function get_layout( $layout_id, $post_id = null ) {
+  public function get_layout( $layout_id, $post_id = null ) {
     $layouts = $this->get_layouts($post_id);
     return $layouts[$layout_id] ?? false;
   }
@@ -142,7 +174,6 @@ class FreeLayout {
    */
   function update_free_layouts($post_id, $layouts) {
     return update_post_meta($post_id, '_free_layouts', $layouts);
-    // return update_field('_free_layouts', $post_id, $layouts);
   }
 
   /**
@@ -153,7 +184,6 @@ class FreeLayout {
    */
   function delete_free_layouts($post_id) {
     return delete_post_meta($post_id, '_free_layouts');
-    // return delete_field( '_free_layouts', $post_id );
   }
 
   /**
@@ -243,52 +273,66 @@ class FreeLayout {
     </style>
     <?php echo ob_get_clean();
   }
-}
-global $freeLayout;
-$freeLayout = new FreeLayout();
 
-/**
- * Template function to render and return a free layout item
- *
- * @param int $post_id Post ID.
- * @param int $layout_id
- * @param [type] $content
- * @return void
- */
-function rhfl_wrap_item( $item, $content, $post_id = null ) {
-  global $freeLayout;
-  $post_id = $post_id ?? get_queried_object_id();
-  $layout_id = $item->rh_free_layout ?? false;
-  if( !$layout_id ) {
-    return "This item doesn't support free layout";
+  /**
+   * Fires the edit mode
+   *
+   * @return void
+   */
+  public function get_edit_mode_js() {
+    if( !$this->is_edit_mode_enabled() ) return;
+    ob_start() ?>
+    <script>
+      if( RHFL.initEditMode ) {
+        // console.log('[rhfl] edit mode initiated');
+        RHFL.initEditMode();
+      } else {
+        // console.log('[rhfl] waiting for edit mode...')
+        jQuery(document).ready(function() { 
+          // console.log('[rhfl] ...edit mode initiated');
+          RHFL.initEditMode(); 
+        });
+      }
+    </script>
+    <?php echo ob_get_clean();
   }
-  $layout = $freeLayout->get_layout($layout_id, $post_id);
-  ob_start() ?>
 
-  <div class="free-layout_item-wrap">
-  <div class="free-layout_item"
-    <?= $layout ? "style='$layout'" : '' ?>
-    data-layout-id="<?= $layout_id ?>" 
-    data-post-id="<?= $post_id ?>">
+  /**
+   * Wraps a layout item
+   *
+   * @param [type] $item
+   * @param [type] $content
+   * @param [type] $post_id
+   * @return void
+   */
+  public function wrap_item( $item, $content, $post_id = null ) {
+    $post_id = $post_id ?? get_queried_object_id();
+    $layout_id = $item->rh_free_layout ?? false;
+    if( !$layout_id ) {
+      return "This item doesn't support free layout";
+    }
+    $layout = $this->get_layout($layout_id, $post_id);
+    ob_start() ?>
 
-    <?= $content ?>
+    <div class="free-layout_item-wrap">
+    <div class="free-layout_item"
+      <?= $layout ? "style='$layout'" : '' ?>
+      data-layout-id="<?= $layout_id ?>" 
+      data-post-id="<?= $post_id ?>">
 
-  </div><!-- /layout_item -->
-  </div><!-- /layout_item-wrap -->
-  
-  <?php return ob_get_clean();
+      <?= $content ?>
+
+    </div><!-- /layout_item -->
+    </div><!-- /layout_item-wrap -->
+
+    <?php return ob_get_clean();
+  }
 }
 
 /**
- * Returns the layout for an item
- *
- * @param [type] $item
- * @param [type] $post_id
- * @return void
+ * Instanciate
  */
-function rhfl_get_layout($item, $post_id = null) {
-  global $freeLayout;
-  $layout_id = $item->rh_free_layout ?? false;
-  if( !$layout_id ) return '';
-  return $freeLayout->get_layout($layout_id, $post_id);
+function rhfl() {
+  return RHFreeLayouts::getInstance();
 }
+rhfl();

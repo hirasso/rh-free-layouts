@@ -7,27 +7,15 @@
 global.jQuery = $ = window.jQuery;
 
 import './scss/rh-free-layouts.scss';
-import plugin, { PluginBase } from './js/plugin';
 import feather from 'feather-icons';
 
-export default class PluginClass extends PluginBase {
+class FreeLayoutsEditMode {
 
-  constructor( el = document.body, options = {} ) {
-
-    super( el, options );
-
-    this.$el = $(el);
-
-    this.$items = this.$el.find('.free-layout_item');
-    if( !this.$items.length ) {
-      this.destroy();
-      return;
-    }
-
+  constructor( el = document ) {
+    let $el = $(el);
+    this.$items = $el.find('.free-layout_item');
     this.initEditMode();
-
   }
-
   /**
    * Inits the edit mode
    */
@@ -40,8 +28,6 @@ export default class PluginClass extends PluginBase {
       if( $el.hasClass('ui-draggable') ) {
         return true;
       }
-
-      let elementId = $el.data('layout-id');
       
       $el.find('.free-layout_item_handle').remove();
       $el.append(`<div class="free-layout_item_handle">
@@ -273,21 +259,11 @@ export default class PluginClass extends PluginBase {
     }, 1500);
   }
 
-  destroy() {
-    super.destroy();
-    $('.free-layout_notification').remove();
-  }
-
 }
-
-PluginClass.DEFAULTS = {};
-
-/**
- * make jQuery Plugin
- */
-plugin('freelayouts', PluginClass, true);
 
 /**
  * Register for direct access to class
  */
-RHFL.Editor = PluginClass;
+RHFL.initEditMode = (el) => {
+  let freeLayouts = new FreeLayoutsEditMode(el);
+};
