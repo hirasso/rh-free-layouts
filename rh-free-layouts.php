@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -99,7 +99,10 @@ class RHFreeLayouts extends RHSingleton {
     wp_enqueue_script( 'rh-free-layouts', $this->asset_uri('assets/rh-free-layouts.js'), ['jquery', 'jquery-ui-draggable', 'jquery-ui-resizable'], null, false );
     $settings = [
       'ajaxUrl' => admin_url('admin-ajax.php'),
-      'initEditMode' => false
+      'initEditMode' => false,
+      'options' => apply_filters('rhfl/options', [
+        'groupSelector' => '.module'
+      ]),
     ];
 
     wp_localize_script( 'rh-free-layouts', 'RHFL', $settings );

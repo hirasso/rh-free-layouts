@@ -1,3 +1,7 @@
+## 1.2.2
+
+- make plugin work
+
 ## 1.2.0 - 2020-05-15
 
 - huge cleanup. Initiate JS from PHP :)

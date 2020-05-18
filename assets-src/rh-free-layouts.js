@@ -17,7 +17,7 @@ class FreeLayoutsEditMode {
     
     this.options = $.extend({}, {
       groupSelector: '.modules',
-    }, options);
+    }, RHFL.options);
 
     this.$items = $el.find('.free-layout_item');
     this.initEditMode();
@@ -83,27 +83,30 @@ class FreeLayoutsEditMode {
   injectDraggableContainment( $el, index ) {
     let marginTop = parseFloat( $el.css('margin-top') );
     let marginLeft = parseFloat( $el.css('margin-left') );
-    // $el.css({
-    //   top: parseFloat( $el.css('margin-top') ) + parseFloat( $el.css('top') ),
-    //   left: parseFloat( $el.css('margin-left') ) + parseFloat( $el.css('left') ),
-    //   margin: 0
-    // });
+    $el.css({
+      top: marginTop + parseFloat( $el.css('top') ),
+      left: marginLeft + parseFloat( $el.css('left') ),
+      margin: 0
+    });
 
     $('#div_containment').remove();
 
     let $containmentDiv = $('<div id="div_containment"></div>');
     let $parent = $el.parent();
+    $parent.css({
+      marginBottom: marginTop
+    })
     
     let rect = {
-      top: $parent.offset().top + marginTop,
-      left: $parent.offset().left - marginLeft,
-      width: $parent.width() + marginLeft,
-      height: $el.height() + 300,
+      top: $parent.offset().top,
+      left: $parent.offset().left,
+      width: $parent.width(),
+      height: $el.height() + 600,
     }
 
     if( $previousItem = this.getPreviousItemInGroup( $el, index ) ) {
       rect.top = $previousItem.offset().top;
-      rect.height += rect.top + $previousItem.height();
+      rect.height += $previousItem.height();
     }
 
     $containmentDiv.css({
@@ -164,6 +167,7 @@ class FreeLayoutsEditMode {
     $('#div_containment').remove();
     this.convertAndSaveLayoutItem( $el );
     $el.trigger('layout:updated');
+    $el.parent().css({marginBottom: ''});
   }
 
   /**
