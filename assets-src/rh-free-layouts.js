@@ -11,15 +11,14 @@ import feather from 'feather-icons';
 
 class FreeLayoutsEditMode {
 
-  constructor( el = document, options = {} ) {
-    
-    let $el = $(el);
+  constructor( options = {} ) {
     
     this.options = $.extend({}, {
-      groupSelector: '.modules',
+      containerSelector: 'body',
+      groupSelector: 'body',
     }, RHFL.options);
-
-    this.$items = $el.find('.free-layout_item');
+    
+    this.$items = $(this.options.containerSelector).find('.free-layout_item');
     this.initEditMode();
   }
   /**
@@ -55,7 +54,7 @@ class FreeLayoutsEditMode {
         },
         scroll: true,
         stop: () => this.afterEditLayout( $el ),
-        containment: "#div_containment",
+        containment: "#rhfl-containment",
         
       });
 
@@ -89,13 +88,17 @@ class FreeLayoutsEditMode {
       margin: 0
     });
 
-    $('#div_containment').remove();
+    this.cleanupHelperElements();
 
-    let $containmentDiv = $('<div id="div_containment"></div>');
+    let $containmentDiv = $('<div id="rhfl-containment"></div>');
     let $parent = $el.parent();
-    $parent.css({
-      marginBottom: marginTop
-    })
+
+    let $spacer = $('<div id="rhfl-spacer"></div>');
+    $spacer.css({
+      marginTop: marginTop,
+      pointerEvents: 'none',
+    }).insertAfter($el);
+
     
     let rect = {
       top: $parent.offset().top,
@@ -138,6 +141,13 @@ class FreeLayoutsEditMode {
   }
 
   /**
+   * Cleans up helper elements
+   */
+  cleanupHelperElements() {
+    $('#rhfl-containment, #rhfl-spacer').remove();
+  }
+
+  /**
    * Custom layout item actions (reset/full-width)
    * @param {*} $el 
    */
@@ -164,10 +174,9 @@ class FreeLayoutsEditMode {
    * @param {*} $el 
    */
   afterEditLayout( $el ) {
-    $('#div_containment').remove();
     this.convertAndSaveLayoutItem( $el );
+    this.cleanupHelperElements();
     $el.trigger('layout:updated');
-    $el.parent().css({marginBottom: ''});
   }
 
   /**

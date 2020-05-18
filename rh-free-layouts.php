@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -100,8 +100,9 @@ class RHFreeLayouts extends RHSingleton {
     $settings = [
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'initEditMode' => false,
-      'options' => apply_filters('rhfl/options', [
-        'groupSelector' => '.module'
+      'options' => apply_filters('rhfl/options', (object) [
+        'containerSelector' => 'body', // initialize on this
+        'groupSelector' => 'body' // group items inside  of this
       ]),
     ];
 

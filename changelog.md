@@ -1,3 +1,9 @@
+## 1.2.3
+
+- default option groupSelector set to 'body'
+- new filter `rhfl/options` to filter options from PHP
+- inject a spacer instead of fiddeling with margin on parent
+
 ## 1.2.2
 
 - make plugin work
