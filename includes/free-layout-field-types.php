@@ -26,11 +26,10 @@ class rh_acf_field_free_layout extends \acf_field {
   } 
 
   function update_value( $value, $post_id, $field ) {
-    global $freeLayout;
     // maybe reset the custom layout for this ID
     $reset = intval($_POST["rh_reset_$value"] ?? 0);
     if( $reset ) {
-      $freeLayout->reset_free_layout_item( $value, $post_id );
+      rhfl()->reset_free_layout_item( $value, $post_id );
     }
     return $value;
   }
@@ -73,8 +72,7 @@ class rh_acf_field_free_layout extends \acf_field {
    * @return void
    */
   function field_group_admin_enqueue_scripts() {
-    global $freeLayout;
-    $freeLayout->render_field_group_styles( $this );
+    rhfl()->render_field_group_styles( $this );
   }
 	
 }
@@ -130,8 +128,7 @@ class rh_acf_field_reset_free_layouts extends \acf_field_true_false {
    * @return void
    */
   function field_group_admin_enqueue_scripts() {
-    global $freeLayout;
-    $freeLayout->render_field_group_styles( $this );
+    rhfl()->render_field_group_styles( $this );
   }
 	
 }

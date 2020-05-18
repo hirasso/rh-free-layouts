@@ -194,7 +194,7 @@ class RHFreeLayouts extends RHSingleton {
    * @param [type] $style
    * @return void
    */
-  function update_free_layout_item( $layout_id, $post_id, $style ) {
+  public function update_free_layout_item( $layout_id, $post_id, $style ) {
     $layouts = $this->get_layouts($post_id);
     $layouts[$layout_id] = $style;
     $this->update_free_layouts($post_id, $layouts);
@@ -207,7 +207,7 @@ class RHFreeLayouts extends RHSingleton {
    * @param int $post_id Post ID.
    * @return void
    */
-  function reset_free_layout_item( $layout_id, $post_id ) {
+  public function reset_free_layout_item( $layout_id, $post_id ) {
     $layouts = $this->get_layouts($post_id);
     unset($layouts[$layout_id]);
     $this->update_free_layouts($post_id, $layouts);

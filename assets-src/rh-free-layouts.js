@@ -11,8 +11,14 @@ import feather from 'feather-icons';
 
 class FreeLayoutsEditMode {
 
-  constructor( el = document ) {
+  constructor( el = document, options = {} ) {
+    
     let $el = $(el);
+    
+    this.options = $.extend({}, {
+      groupSelector: '.modules',
+    }, options);
+
     this.$items = $el.find('.free-layout_item');
     this.initEditMode();
   }
@@ -42,6 +48,7 @@ class FreeLayoutsEditMode {
       $el.draggable({
         iframeFix: true,
         cancel: 'a',
+        refreshPositions: true,
         helper: (event) => {
           this.injectDraggableContainment( $el, index );
           return $el;
@@ -74,11 +81,13 @@ class FreeLayoutsEditMode {
    * @param {*} index 
    */
   injectDraggableContainment( $el, index ) {
-    $el.css({
-      top: parseFloat( $el.css('margin-top') ) + parseFloat( $el.css('top') ),
-      left: parseFloat( $el.css('margin-left') ) + parseFloat( $el.css('left') ),
-      margin: 0
-    });
+    let marginTop = parseFloat( $el.css('margin-top') );
+    let marginLeft = parseFloat( $el.css('margin-left') );
+    // $el.css({
+    //   top: parseFloat( $el.css('margin-top') ) + parseFloat( $el.css('top') ),
+    //   left: parseFloat( $el.css('margin-left') ) + parseFloat( $el.css('left') ),
+    //   margin: 0
+    // });
 
     $('#div_containment').remove();
 
@@ -86,14 +95,13 @@ class FreeLayoutsEditMode {
     let $parent = $el.parent();
     
     let rect = {
-      top: $parent.offset().top,
-      left: $parent.offset().left,
-      width: $parent.width(),
+      top: $parent.offset().top + marginTop,
+      left: $parent.offset().left - marginLeft,
+      width: $parent.width() + marginLeft,
       height: $el.height() + 300,
     }
 
-    if( index > 0 ) {
-      let $previousItem = this.$items.eq(index - 1);
+    if( $previousItem = this.getPreviousItemInGroup( $el, index ) ) {
       rect.top = $previousItem.offset().top;
       rect.height += rect.top + $previousItem.height();
     }
@@ -109,6 +117,21 @@ class FreeLayoutsEditMode {
       background: 'rgba(0,200,0,0.1)',
     })
     $('body').append( $containmentDiv );
+  }
+
+  /**
+   * Find previous item in Group
+   * @param {*} currentIndex 
+   */
+  getPreviousItemInGroup( $currentItem, currentIndex ) {
+    let $currentGroup = $currentItem.parents(`${this.options.groupSelector}:first`);
+    for( let i = currentIndex-1; i > 0; i--) {
+      let $previousItem = this.$items.eq(i);
+      if( $previousItem.parents(`${this.options.groupSelector}:first`).is($currentGroup) ) {
+        return $previousItem;
+      }
+    }
+    return null;
   }
 
   /**
@@ -264,6 +287,6 @@ class FreeLayoutsEditMode {
 /**
  * Register for direct access to class
  */
-RHFL.initEditMode = (el) => {
-  let freeLayouts = new FreeLayoutsEditMode(el);
+RHFL.initEditMode = (selector) => {
+  let freeLayouts = new FreeLayoutsEditMode(selector);
 };
