@@ -1,3 +1,8 @@
+## 1.2.4
+
+- fix second item not detecting the one before it
+- don't display the free layout field reset before post has been saved
+
 ## 1.2.3
 
 - default option groupSelector set to 'body'

@@ -55,15 +55,18 @@ class rh_acf_field_free_layout extends \acf_field {
    */
   function render_field( $field ) {
     $field = json_decode(json_encode($field));
-    if( empty($field->value) ) return;
     echo "<!-- Rendered by free-layout.php -->\n";
-    echo "<input type='hidden' value='$field->value' name='$field->name' id='$field->id'></input>\n";
-    acf_render_field([
-      'type'			=> 'true_false',
-      'label'			=> false,
-      'name'			=> "rh_reset_$field->value",
-      'message'   => __("Reset this item's free layout"),
-    ]);
+    if( empty($field->value) ) {
+      echo 'Free layout not initialized yet';
+    } else {
+      echo "<input type='hidden' value='$field->value' name='$field->name' id='$field->id'></input>\n";
+      acf_render_field([
+        'type'			=> 'true_false',
+        'label'			=> false,
+        'name'			=> "rh_reset_$field->value",
+        'message'   => __("Reset this item's free layout"),
+      ]);
+    }
   }
 
   /**
