@@ -97,7 +97,6 @@ class FreeLayoutsEditMode {
       marginTop: marginTop,
       pointerEvents: 'none',
     }).insertAfter($el);
-
     
     let rect = {
       top: $parent.offset().top,
@@ -106,7 +105,8 @@ class FreeLayoutsEditMode {
       height: $el.height() + 600,
     }
 
-    if( $previousItem = this.getPreviousItemInGroup( $el, index ) ) {
+    let $previousItem = this.getPreviousItemInGroup( $el, index );
+    if( $previousItem ) {
       rect.top = $previousItem.offset().top;
       rect.height += $previousItem.height();
     }
@@ -129,14 +129,16 @@ class FreeLayoutsEditMode {
    * @param {*} currentIndex 
    */
   getPreviousItemInGroup( $currentItem, currentIndex ) {
+    // early return for first of all items
+    if( currentIndex === 0 ) return false;
     let $currentGroup = $currentItem.parents(`${this.options.groupSelector}:first`);
-    for( let i = currentIndex-1; i > 0; i--) {
+    for( let i = currentIndex-1; i >= 0; i--) {
       let $previousItem = this.$items.eq(i);
       if( $previousItem.parents(`${this.options.groupSelector}:first`).is($currentGroup) ) {
         return $previousItem;
       }
     }
-    return null;
+    return false;
   }
 
   /**
