@@ -47,7 +47,6 @@ class FreeLayoutsEditMode {
       $el.draggable({
         iframeFix: true,
         cancel: 'a',
-        refreshPositions: true,
         helper: (event) => {
           this.injectDraggableContainment( $el, index );
           return $el;
