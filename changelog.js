@@ -2,15 +2,19 @@ const fs = require('fs');
 const child = require('child_process');
 const argv = require('minimist')(process.argv.slice(2));
 
+const changelogPath = './changelog.md';
 const pluginFiles = ['rh-free-layouts.php'];
 const blacklist = ['Merge branch ', 'prepare-commit-msg', 'pre-commit-msg', '#ignore'];
+
 
 /**
  * Get the plugin version from a file
  * @param {String} pluginFile 
  */
 function getPluginVersion( pluginFile ) {
-  return String(pluginFile).match(/^ \* Version: ([0-9|.].*)/m)[1]
+  const matches = String(pluginFile).match(/^ \* Version: ([0-9|.].*)/m);
+  const version = matches ? matches[1] : null;
+  return version;
 }
 
 /**
@@ -83,8 +87,8 @@ function getPluginFileInCommit(hash) {
 async function generateChangelog() {
   const commitsArray = getCommits();
   let changelog = {};
-  
   let lastCommit = null;
+  
   for( const commit of Object.values(commitsArray) ) {
     // continue;
     let pluginFile = getPluginFileInCommit(commit.hash);
@@ -92,10 +96,12 @@ async function generateChangelog() {
     pluginFile = pluginFile.toString('utf-8');
     if( lastCommit && lastCommit.message === commit.message ) continue;
     lastCommit = commit;
-    let date = new Date(commit.date).toISOString().split('T')[0];
-    let shortHash = commit.hash.substr(0,7);
-    let message = `${commit.message} (#${shortHash})`;
-    changelog = addCommitMessageToChangelog( getPluginVersion( pluginFile ), message, changelog, date );
+    const date = new Date(commit.date).toISOString().split('T')[0];
+    const shortHash = commit.hash.substr(0,7);
+    const message = `${commit.message} (#${shortHash})`;
+    const pluginVersion = getPluginVersion( pluginFile ); 
+    if( !pluginVersion ) continue;
+    changelog = addCommitMessageToChangelog( pluginVersion, message, changelog, date );
   }
   return changelog;
 }
@@ -113,7 +119,9 @@ async function writeChangelog( changelog ) {
     }
     file += `\n`;
   }
-  fs.writeFileSync('./changelog.md', file);
+  fs.writeFileSync(changelogPath, file);
+  child.execSync(`git add ${changelogPath}`);
+  child.execSync(`git commit --amend -C HEAD --no-verify ${changelogPath}`);
 }
 
 generateChangelog().then(changelog => writeChangelog(changelog));

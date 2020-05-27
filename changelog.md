@@ -1,6 +1,7 @@
 #### 1.2.5 (2020-05-27)
 
-- Add changelog generator (#1648956)
+- Optimize changelog generator (#7787fab)
+- Add changelog generator (#53af5ba)
 
 #### 1.2.4 (2020-05-19)
 
