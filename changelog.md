@@ -1,35 +1,62 @@
-## 1.2.4
+#### 1.2.5 (2020-05-27)
 
-- fix second item not detecting the one before it
-- don't display the free layout field reset before post has been saved
+- Add changelog generator (#1648956)
 
-## 1.2.3
+#### 1.2.4 (2020-05-19)
 
-- default option groupSelector set to 'body'
-- new filter `rhfl/options` to filter options from PHP
-- inject a spacer instead of fiddeling with margin on parent
+- v 1.2.4 (#b5afc57)
+- fix second item not detecting the one before it (#0f572ab)
 
-## 1.2.2
+#### 1.2.3 (2020-05-19)
 
-- make plugin work
+- remove 'refreshPositions' from js (#32be5d7)
+- dont render resets if no value (#2b7607a)
+- v 1.2.3 (#5c9d2a5)
 
-## 1.2.0 - 2020-05-15
+#### 1.2.2 (2020-05-18)
 
-- huge cleanup. Initiate JS from PHP :)
+- make plugin work (#3e08f04)
 
-## 1.1.1 - 2020-05-14
+#### 1.2.1 (2020-05-18)
 
-- added `scopeHoist: true` to production build, to fix HMR conflicts with themes or other plugins using parcel
+- v 1.2.1 (#4509df7)
 
-## 1.0.3 - 2020-05-13
+#### 1.2.0 (2020-05-18)
 
-- renamed API functions
-- introduce check for `RHFL_DEV_MODE`
-- added `readme.md` with instructions
+- Fix draggable containment and API (#d1afb72)
+- v 1.2.0 (#869b929)
 
-## 1.0.2 — 2020-05-06
+#### 1.1.1 (2020-05-15)
 
-- added changelog.md
-- added git hook pre-commit: npm run build
-- added rimraf
-- removed .map files in assets
+- Huge cleanup (#e51c10e)
+- fix readme (#77cc94b)
+- update changelog (#6cdf2c5)
+- v 1.1.1 (#1d8bbb1)
+
+#### 1.1.0 (2020-05-14)
+
+- add scopeHoist to support other parcel instances'  HMR on same page (#49df685)
+- v 1.1.0 (#3888ab1)
+
+#### 1.0.3 (2020-05-13)
+
+- add styles and scripts (#21e6790)
+- Add readme, revamp api (#8e5d2a8)
+
+#### 1.0.2 (2020-05-06)
+
+- v 1.0.2 (#bd50807)
+
+#### 1.0.1 (2020-05-04)
+
+- optimize resizing (#5df8f4b)
+
+#### 1.0.0 (2020-04-29)
+
+- move script to the very end (#ce6e303)
+- cleanup (#a2399fc)
+- commit assets (#43d897a)
+- Support centered scaling (#245961c)
+- Support centered resizing on 'w' handle (#a82dba6)
+- First functional commit (#1e99a47)
+
