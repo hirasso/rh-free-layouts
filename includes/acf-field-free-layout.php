@@ -20,11 +20,13 @@ class rh_acf_field_free_layout extends \acf_field {
   function update_value( $value, $post_id, $field ) {
     if ( empty( $value ) ) {
       $value = uniqid('free_layout_');
-    }
-    // maybe reset the custom layout for this ID
-    $reset = intval($_POST["rh_reset_$value"] ?? 0);
-    if( $reset ) {
-      rhfl()->reset_free_layout_item( $value, $post_id );
+    } else {
+      // maybe reset the custom layout for this ID
+      $reset = (bool) intval($_POST["rh_reset_$value"] ?? 0);
+      if( $reset ) {
+        rhfl()->reset_free_layout_item( $value, $post_id );
+        $value = uniqid('free_layout_');
+      }
     }
     return $value;
   }
@@ -51,17 +53,22 @@ class rh_acf_field_free_layout extends \acf_field {
   function render_field( $field ) {
     // necessary, if not present, 'update_value' will not be fired
     printf(
-      '<input type="hidden" name="%s" value="%s" id="%s">',
+      '<input type="text" readonly name="%s" value="%s" id="%s">',
       esc_attr( $field['name'] ),
       esc_attr( $field['value'] ),
       esc_attr( $field['id'] )
     );
-    acf_render_field([
-      'type'			=> 'true_false',
-      'label'			=> false,
-      'name'			=> sprintf( "rh_reset_%s", esc_attr( $field['value'] ) ),
-      'message'   => __("Reset this item's free layout"),
-    ]);
+    // render reset ui if field has a value
+    if( $field['value'] ) {
+      acf_render_field([
+        'type'			=> 'true_false',
+        'label'			=> false,
+        'name'			=> sprintf( "rh_reset_%s", esc_attr( $field['value'] ) ),
+        'message'   => __("Reset this item's free layout"),
+      ]);
+    } else {
+      _e('Save the post to generate a layout id');
+    }
     
   }
 

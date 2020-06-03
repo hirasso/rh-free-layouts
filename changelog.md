@@ -1,3 +1,7 @@
+#### 1.2.8 (2020-06-03)
+
+- Fix resetting layout values (#ca0f582)
+
 #### 1.2.7 (2020-06-03)
 
 - fix update_value not being fired (#fa14592)
