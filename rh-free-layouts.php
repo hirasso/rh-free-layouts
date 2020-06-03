@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.2.5
+ * Version: 1.2.6
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -131,7 +131,11 @@ class RHFreeLayouts extends RHSingleton {
    * @return void
    */
   function include_field_types() {
-    include_once( $this->get_file_path('includes/free-layout-field-types.php') );
+    include_once( $this->get_file_path('includes/acf-field-free-layout.php') );
+    include_once( $this->get_file_path('includes/acf-field-reset-free-layouts.php') );
+
+    acf_register_field_type( 'rh_acf_field_free_layout' );
+    acf_register_field_type( 'rh_acf_field_reset_free_layouts' );
   }
 
   /**
@@ -167,7 +171,6 @@ class RHFreeLayouts extends RHSingleton {
     $post_id = $post_id ?? get_queried_object_id();
     $layouts = get_post_meta($post_id, '_free_layouts', true);
     return is_array($layouts) ? $layouts : [];
-    // return (array) get_field('_free_layouts', $post_id);
   }
 
   /**
@@ -262,7 +265,7 @@ class RHFreeLayouts extends RHSingleton {
    * @param [type] $field
    * @return void
    */
-  function render_field_group_styles( $field ) {
+  public function render_field_group_styles( $field ) {
     $selector = str_replace('_', '-', $field->name);
     ob_start() ?>
     <style>
@@ -334,7 +337,9 @@ class RHFreeLayouts extends RHSingleton {
 }
 
 /**
- * Instanciate
+ * Returns the instance
+ *
+ * @return RHFreeLayouts
  */
 function rhfl() {
   return RHFreeLayouts::getInstance();

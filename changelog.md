@@ -1,3 +1,7 @@
+#### 1.2.6 (2020-06-03)
+
+- New Field Setting 'Show Reset Checkbox', fix for empty value on first save (#9809c8a)
+
 #### 1.2.5 (2020-05-27)
 
 - Optimize changelog generator (#09cc9d0)
