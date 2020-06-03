@@ -51,7 +51,7 @@ class rh_acf_field_free_layout extends \acf_field {
   function render_field( $field ) {
     // necessary, if not present, 'update_value' will not be fired
     printf(
-      '<input type="text" name="%s" value="%s" id="%s" readonly>',
+      '<input type="hidden" name="%s" value="%s" id="%s">',
       esc_attr( $field['name'] ),
       esc_attr( $field['value'] ),
       esc_attr( $field['id'] )

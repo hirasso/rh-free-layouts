@@ -1,6 +1,6 @@
 #### 1.2.7 (2020-06-03)
 
-- fix update_value not being fired (#ff278e2)
+- fix update_value not being fired (#fa14592)
 
 #### 1.2.6 (2020-06-03)
 
