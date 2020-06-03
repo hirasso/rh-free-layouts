@@ -1,6 +1,10 @@
+#### 1.2.7 (2020-06-03)
+
+- fix update_value not being fired (#ff278e2)
+
 #### 1.2.6 (2020-06-03)
 
-- New Field Setting 'Show Reset Checkbox', fix for empty value on first save (#9809c8a)
+- New Field Setting 'Show Reset Checkbox', fix for empty value on first save (#1d18f36)
 
 #### 1.2.5 (2020-05-27)
 

@@ -18,6 +18,9 @@ class rh_acf_field_free_layout extends \acf_field {
 	}
 
   function update_value( $value, $post_id, $field ) {
+    if ( empty( $value ) ) {
+      $value = uniqid('free_layout_');
+    }
     // maybe reset the custom layout for this ID
     $reset = intval($_POST["rh_reset_$value"] ?? 0);
     if( $reset ) {
@@ -46,10 +49,9 @@ class rh_acf_field_free_layout extends \acf_field {
    * @return void
    */
   function render_field( $field ) {
-    if( !$field['value'] ) $field['value'] = uniqid('free_layout_');
-    
+    // necessary, if not present, 'update_value' will not be fired
     printf(
-      '<input type="hidden" name="%s" value="%s" id="%s"></input>',
+      '<input type="text" name="%s" value="%s" id="%s" readonly>',
       esc_attr( $field['name'] ),
       esc_attr( $field['value'] ),
       esc_attr( $field['id'] )
