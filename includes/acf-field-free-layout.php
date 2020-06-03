@@ -12,9 +12,6 @@ class rh_acf_field_free_layout extends \acf_field {
 		$this->name = 'rh_free_layout';
 		$this->label = __("Free Layout");
 		$this->category = __("Free Layout");
-    $this->defaults = [
-      'readonly' => 1,
-    ];
 	}
 
   function update_value( $value, $post_id, $field ) {
@@ -52,8 +49,14 @@ class rh_acf_field_free_layout extends \acf_field {
    */
   function render_field( $field ) {
     // necessary, if not present, 'update_value' will not be fired
+    $input_type = 'hidden';
+    $readonly = '';
+    if( rhfl()->is_plugin_dev_mode() ) {
+      $input_type = 'text';
+      $readonly = 'readonly';
+    }
     printf(
-      '<input type="hidden" name="%s" value="%s" id="%s">',
+      "<input type='$input_type' $readonly name='%s' value='%s' id='%s'>",
       esc_attr( $field['name'] ),
       esc_attr( $field['value'] ),
       esc_attr( $field['id'] )

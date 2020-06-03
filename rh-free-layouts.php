@@ -30,7 +30,7 @@ class RHFreeLayouts extends RHSingleton {
    *
    * @return boolean
    */
-  private function is_plugin_dev_mode() {
+  public function is_plugin_dev_mode() {
     return defined('RHFL_DEV_MODE') && RHFL_DEV_MODE === true;
   }
 

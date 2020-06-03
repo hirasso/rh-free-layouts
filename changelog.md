@@ -1,5 +1,6 @@
 #### 1.2.8 (2020-06-03)
 
+- Cleanup (#6c645f0)
 - Fix resetting layout values (#fed2759)
 
 #### 1.2.7 (2020-06-03)
