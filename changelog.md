@@ -1,6 +1,10 @@
+#### 1.2.9 (2020-06-30)
+
+- skip `getPreviousItemInGroup` for items with attr `[data-rhfl-group-start="true"]` (#cde4323)
+
 #### 1.2.8 (2020-06-03)
 
-- Cleanup (#6c645f0)
+- Cleanup (#e661ca2)
 - Fix resetting layout values (#fed2759)
 
 #### 1.2.7 (2020-06-03)

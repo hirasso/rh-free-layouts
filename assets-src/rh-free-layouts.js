@@ -131,6 +131,7 @@ class FreeLayoutsEditMode {
   getPreviousItemInGroup( $currentItem, currentIndex ) {
     // early return for first of all items
     if( currentIndex === 0 ) return false;
+    if( $currentItem.data('rhfl-group-start') ) return false;
     let $currentGroup = $currentItem.parents(`${this.options.groupSelector}:first`);
     for( let i = currentIndex-1; i >= 0; i--) {
       let $previousItem = this.$items.eq(i);
