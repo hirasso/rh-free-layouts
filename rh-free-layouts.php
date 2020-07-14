@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.2.9
+ * Version: 1.3.0
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -10,7 +10,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-require_once(plugin_dir_path( __FILE__ ) . 'includes/class.singleton.php');
+require_once(__DIR__ . '/inc/class.singleton.php');
+require_once(__DIR__ . '/inc/class.connect-to-updater.php');
+new \RH_Connect_To_Updater(__FILE__);
 
 class RHFreeLayouts extends RHSingleton {
 
@@ -18,7 +20,6 @@ class RHFreeLayouts extends RHSingleton {
    * Constructor
    */
   function __construct() {
-    add_action('plugins_loaded', [$this, 'connect_to_rh_updater']);
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
     add_action('wp_enqueue_scripts', [$this, 'enqueue_style'], 10);
@@ -32,32 +33,6 @@ class RHFreeLayouts extends RHSingleton {
    */
   public function is_plugin_dev_mode() {
     return defined('RHFL_DEV_MODE') && RHFL_DEV_MODE === true;
-  }
-
-  /**
-   * Connects the plugin to RH Updater
-   *
-   * @return void
-   */
-  public function connect_to_rh_updater() {
-    if( class_exists('\RH_Bitbucket_Updater') ) {
-      new \RH_Bitbucket_Updater( __FILE__ );
-    } else {
-      add_action('admin_notices', [$this, 'show_notice_missing_rh_updater']);
-    }
-  }
-
-  /**
-   * Shows the missing updater notice
-   *
-   * @return void
-   */
-  public function show_notice_missing_rh_updater() {
-    global $rh_updater_notice_shown;
-    if( !$rh_updater_notice_shown && current_user_can('activate_plugins') ) {
-      $rh_updater_notice_shown = true;
-      echo "<div class='notice notice-warning'><p>RH Updater is not installed. Custom plugins won't be updated.</p></div>";
-    }
   }
 
   /**
@@ -131,8 +106,8 @@ class RHFreeLayouts extends RHSingleton {
    * @return void
    */
   function include_field_types() {
-    include_once( $this->get_file_path('includes/acf-field-free-layout.php') );
-    include_once( $this->get_file_path('includes/acf-field-reset-free-layouts.php') );
+    include_once( $this->get_file_path('inc/class.acf-field-free-layout.php') );
+    include_once( $this->get_file_path('inc/class.acf-field-reset-free-layouts.php') );
 
     acf_register_field_type( 'rh_acf_field_free_layout' );
     acf_register_field_type( 'rh_acf_field_reset_free_layouts' );

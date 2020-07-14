@@ -1,6 +1,10 @@
+#### 1.3.0 (2020-07-14)
+
+- New folder structure and performance improvements for update checker (#588d143)
+
 #### 1.2.9 (2020-06-30)
 
-- skip `getPreviousItemInGroup` for items with attr `[data-rhfl-group-start="true"]` (#cde4323)
+- skip `getPreviousItemInGroup` for items with attr `[data-rhfl-group-start="true"]` (#4eaec1e)
 
 #### 1.2.8 (2020-06-03)
 
