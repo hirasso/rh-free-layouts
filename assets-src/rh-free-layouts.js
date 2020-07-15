@@ -4,7 +4,7 @@
  * Author URI: https://rassohilber.com
  */
 
-global.jQuery = $ = window.jQuery;
+var jQuery = $ = global.jQuery;
 
 import './scss/rh-free-layouts.scss';
 import feather from 'feather-icons';
@@ -12,7 +12,6 @@ import feather from 'feather-icons';
 class FreeLayoutsEditMode {
 
   constructor( options = {} ) {
-    
     this.options = $.extend({}, {
       containerSelector: 'body',
       groupSelector: 'body',

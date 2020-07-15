@@ -1,6 +1,10 @@
+#### 1.3.1 (2020-07-15)
+
+- fix jquery dependency (#30784a2)
+
 #### 1.3.0 (2020-07-14)
 
-- New folder structure and performance improvements for update checker (#588d143)
+- New folder structure and performance improvements for update checker (#4825f26)
 
 #### 1.2.9 (2020-06-30)
 
