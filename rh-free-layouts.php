@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -11,8 +11,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 require_once(__DIR__ . '/inc/class.singleton.php');
-require_once(__DIR__ . '/inc/class.connect-to-updater.php');
-new \RH_Connect_To_Updater(__FILE__);
 
 class RHFreeLayouts extends RHSingleton {
 
