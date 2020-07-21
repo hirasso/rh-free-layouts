@@ -4,7 +4,7 @@
  * Author URI: https://rassohilber.com
  */
 
-var $ = window.jQuery;
+const $ = window.jQuery;
 
 import './scss/rh-free-layouts.scss';
 import feather from 'feather-icons';
