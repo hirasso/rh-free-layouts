@@ -1,6 +1,7 @@
-#### 1.3.2 (2020-07-17)
+#### 1.3.2 (2020-07-21)
 
-- Remove rh-updater dependency (#566a738)
+- fix jQuery dependency (#7dc4e07)
+- Remove rh-updater dependency (#b1ec71e)
 
 #### 1.3.1 (2020-07-15)
 
