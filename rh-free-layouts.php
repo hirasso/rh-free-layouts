@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -17,7 +17,7 @@ class RHFreeLayouts extends RHSingleton {
   /**
    * Constructor
    */
-  function __construct() {
+  public function __construct() {
     add_action('wp_ajax_update_free_layout', [$this, 'update_free_layout_POST']);
     add_action('acf/include_field_types', [$this, 'include_field_types']);
     add_action('wp_enqueue_scripts', [$this, 'enqueue_style'], 10);
@@ -65,7 +65,7 @@ class RHFreeLayouts extends RHSingleton {
    *
    * @return void
    */
-  function enqueue_script() {
+  public function enqueue_script() {
     
     if( !$this->is_edit_mode_enabled() ) return;
 
@@ -88,7 +88,7 @@ class RHFreeLayouts extends RHSingleton {
    * @param [type] $path
    * @return void
    */
-  function asset_uri( $path ) {
+  public function asset_uri( $path ) {
     $uri = plugins_url( $path, __FILE__ );
     $file = $this->get_file_path( $path );
     if( file_exists( $file ) ) {
@@ -103,7 +103,7 @@ class RHFreeLayouts extends RHSingleton {
    *
    * @return void
    */
-  function include_field_types() {
+  public function include_field_types() {
     include_once( $this->get_file_path('inc/class.acf-field-free-layout.php') );
     include_once( $this->get_file_path('inc/class.acf-field-reset-free-layouts.php') );
 
@@ -116,7 +116,7 @@ class RHFreeLayouts extends RHSingleton {
    *
    * @return void
    */
-  function get_file_path( $path ) {
+  public function get_file_path( $path ) {
     $path = ltrim( $path, '/' );
     $file = plugin_dir_path( __FILE__ ) . $path;
     return $file;
@@ -140,7 +140,7 @@ class RHFreeLayouts extends RHSingleton {
    * @param int $post_id Post ID.
    * @return array
    */
-  function get_layouts($post_id = null) {
+  public function get_layouts($post_id = null) {
     $post_id = $post_id ?? get_queried_object_id();
     $layouts = get_post_meta($post_id, '_free_layouts', true);
     return is_array($layouts) ? $layouts : [];
@@ -152,7 +152,8 @@ class RHFreeLayouts extends RHSingleton {
    * @param [type] $layouts
    * @return void
    */
-  function update_free_layouts($post_id, $layouts) {
+  public function update_free_layouts($post_id, $layouts) {
+    do_action('rhfl/update_free_layouts', $post_id, $layouts);
     return update_post_meta($post_id, '_free_layouts', $layouts);
   }
 
@@ -162,7 +163,8 @@ class RHFreeLayouts extends RHSingleton {
    * @param int $post_id Post ID.
    * @return void
    */
-  function delete_free_layouts($post_id) {
+  public function delete_free_layouts($post_id) {
+    do_action('rhfl/delete_free_layouts', $post_id);
     return delete_post_meta($post_id, '_free_layouts');
   }
 
@@ -198,7 +200,7 @@ class RHFreeLayouts extends RHSingleton {
    *
    * @return void
    */
-  function update_free_layout_POST() {
+  public function update_free_layout_POST() {
 
     $layout_id = $_POST["layout_id"] ?? false;
     $post_id = $_POST["post_id"] ?? false;
