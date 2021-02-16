@@ -1,6 +1,7 @@
 #### 1.3.3 (2021-02-16)
 
-- add new actions `rhfl/update_free_layouts` and `rhfl/delete_free_layouts` (#7b8b8e4)
+- force int for $post_id (#b3055b9)
+- add new actions `rhfl/update_free_layouts` and `rhfl/delete_free_layouts` (#aca5728)
 
 #### 1.3.2 (2020-07-21)
 

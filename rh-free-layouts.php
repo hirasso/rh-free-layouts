@@ -207,6 +207,7 @@ class RHFreeLayouts extends RHSingleton {
     if( !$layout_id || !$post_id ) return;
 
     $css = $_POST["css"] ?? false;
+    $post_id = intval($post_id);
 
     // reset item and bail early if no css given
     if( !$css ) {
