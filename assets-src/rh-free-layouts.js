@@ -15,7 +15,7 @@ class FreeLayoutsEditMode {
     this.options = $.extend({}, {
       containerSelector: 'body',
       groupSelector: 'body',
-    }, RHFL.options);
+    }, options);
     
     this.$items = $(this.options.containerSelector).find('.free-layout_item');
     this.initEditMode();
@@ -301,6 +301,6 @@ class FreeLayoutsEditMode {
 /**
  * Register for direct access to class
  */
-RHFL.initEditMode = (selector) => {
-  let freeLayouts = new FreeLayoutsEditMode(selector);
+RHFL.initEditMode = (options) => {
+  let freeLayouts = new FreeLayoutsEditMode(options);
 };
