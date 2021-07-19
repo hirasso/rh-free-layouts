@@ -1,6 +1,11 @@
-#### 1.3.3 (2021-02-16)
+#### 1.3.4 (2021-07-19)
 
-- force int for $post_id (#b3055b9)
+- Set update notification text color (#628c3a8)
+
+#### 1.3.3 (2021-06-08)
+
+- Respect passed options object (#2404731)
+- force int for $post_id (#1793d6f)
 - add new actions `rhfl/update_free_layouts` and `rhfl/delete_free_layouts` (#aca5728)
 
 #### 1.3.2 (2020-07-21)
