@@ -1,6 +1,10 @@
+#### 1.3.5 (2021-07-29)
+
+- Fix `delete_free_layouts()` (#f68cf8a)
+
 #### 1.3.4 (2021-07-19)
 
-- Set update notification text color (#628c3a8)
+- Set update notification text color (#54e6b31)
 
 #### 1.3.3 (2021-06-08)
 

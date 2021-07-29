@@ -24,9 +24,8 @@ class rh_acf_field_reset_free_layouts extends \acf_field_true_false {
    * @return void
    */
   function update_value( $value, $post_id, $field ) {
-    global $freeLayout;
     if( $value ) {
-      $freeLayout->delete_free_layouts($post_id);
+      rhfl()->delete_free_layouts($post_id);
     }
     return '';
   }

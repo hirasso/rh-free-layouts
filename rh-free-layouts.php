@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -116,7 +116,7 @@ class RHFreeLayouts extends RHSingleton {
    *
    * @return void
    */
-  public function get_file_path( $path ) {
+  public function get_file_path( $path ): string {
     $path = ltrim( $path, '/' );
     $file = plugin_dir_path( __FILE__ ) . $path;
     return $file;
