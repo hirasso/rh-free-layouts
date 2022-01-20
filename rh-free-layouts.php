@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
