@@ -23,9 +23,9 @@ abstract class RHSingleton {
     return self::$instances[$class];
   }
 
-  private function __clone() {}
+  protected function __clone() {}
 
-  private function __wakeup() {}
+  public function __wakeup() {}
 }
 
 endif;
