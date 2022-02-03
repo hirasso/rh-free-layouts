@@ -12,11 +12,7 @@ import feather from 'feather-icons';
 class FreeLayoutsEditMode {
 
   constructor( options = {} ) {
-    this.options = $.extend({}, {
-      containerSelector: 'body',
-      groupSelector: 'body',
-    }, options);
-    
+    this.options = options;
     this.$items = $(this.options.containerSelector).find('.free-layout_item');
     this.initEditMode();
   }
@@ -45,7 +41,7 @@ class FreeLayoutsEditMode {
       
       $el.draggable({
         iframeFix: true,
-        cancel: 'a',
+        cancel: this.options.cancelDraggingSelector,
         helper: (event) => {
           this.injectDraggableContainment( $el, index );
           return $el;
@@ -301,6 +297,4 @@ class FreeLayoutsEditMode {
 /**
  * Register for direct access to class
  */
-RHFL.initEditMode = (options) => {
-  let freeLayouts = new FreeLayoutsEditMode(options);
-};
+RHFL.initEditMode = options => new FreeLayoutsEditMode(options);

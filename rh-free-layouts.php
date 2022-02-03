@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -75,7 +75,8 @@ class RHFreeLayouts extends RHSingleton {
       'initEditMode' => false,
       'options' => apply_filters('rhfl/options', (object) [
         'containerSelector' => 'body', // initialize on this
-        'groupSelector' => 'body' // group items inside  of this
+        'groupSelector' => 'body', // group items inside  of this
+        'cancelDraggingSelector' => 'a'
       ]),
     ];
 
@@ -202,6 +203,7 @@ class RHFreeLayouts extends RHSingleton {
    */
   public function update_free_layout_POST() {
 
+    $updated_message = apply_filters('rhfl/message_database_updated', 'Database updated');
     $layout_id = $_POST["layout_id"] ?? false;
     $post_id = $_POST["post_id"] ?? false;
     if( !$layout_id || !$post_id ) return;
@@ -213,7 +215,7 @@ class RHFreeLayouts extends RHSingleton {
     if( !$css ) {
       $this->reset_free_layout_item( $layout_id, $post_id );
       wp_send_json_success([
-        'message' => 'Database updated',
+        'message' => $updated_message,
         'layout_id' => $layout_id,
         'post_id' => $post_id,
       ]);
@@ -228,7 +230,7 @@ class RHFreeLayouts extends RHSingleton {
     $style = join(" ", $style);
     $this->update_free_layout_item( $layout_id, $post_id, $style );
     wp_send_json_success([
-      'message' => 'Database updated',
+      'message' => $updated_message,
       'layout_id' => $layout_id,
       'post_id' => $post_id,
       'style' => $style,
@@ -268,12 +270,12 @@ class RHFreeLayouts extends RHSingleton {
     <script>
       if( RHFL.initEditMode ) {
         // console.log('[rhfl] edit mode initiated');
-        RHFL.initEditMode();
+        RHFL.initEditMode(RHFL.options);
       } else {
         // console.log('[rhfl] waiting for edit mode...')
         jQuery(document).ready(function() { 
           // console.log('[rhfl] ...edit mode initiated');
-          RHFL.initEditMode(); 
+          RHFL.initEditMode(RHFL.options); 
         });
       }
     </script>

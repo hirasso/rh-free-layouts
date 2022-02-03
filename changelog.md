@@ -1,6 +1,10 @@
+#### 1.3.7 (2022-02-03)
+
+- Add some more filters  - added `cancelDraggingSelector` filter - added `rhfl/message_database_updated` (#ce124c0)
+
 #### 1.3.6 (2022-02-03)
 
-- Update NPM (#a4c5dca)
+- Update NPM (#7ac3769)
 - V 1.3.6 (#7e006d6)
 
 #### 1.3.5 (2022-01-20)
