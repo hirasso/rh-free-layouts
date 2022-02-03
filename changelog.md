@@ -1,6 +1,12 @@
-#### 1.3.5 (2021-07-29)
+#### 1.3.6 (2022-02-03)
 
-- Fix `delete_free_layouts()` (#f68cf8a)
+- Update NPM (#a4c5dca)
+- V 1.3.6 (#7e006d6)
+
+#### 1.3.5 (2022-01-20)
+
+- PHP 8 compat (#32e3d4c)
+- Fix `delete_free_layouts()` (#2625f43)
 
 #### 1.3.4 (2021-07-19)
 
