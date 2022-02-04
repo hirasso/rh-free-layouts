@@ -1,7 +1,7 @@
 <?php 
 /**
  * Plugin Name: RH Free Layouts
- * Version: 1.3.7
+ * Version: 1.3.8
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts 
  * Author URI: https://rassohilber.com
@@ -155,7 +155,19 @@ class RHFreeLayouts extends RHSingleton {
    */
   public function update_free_layouts($post_id, $layouts) {
     do_action('rhfl/update_free_layouts', $post_id, $layouts);
+    $this->maybe_delete_super_cache_post($post_id);
     return update_post_meta($post_id, '_free_layouts', $layouts);
+  }
+
+  /**
+   * Deletes the cache for a post cached by wp super cache
+   *
+   * @param int $post_id
+   * @return void
+   * @author Rasso Hilber <mail@rassohilber.com>
+   */
+  private function maybe_delete_super_cache_post($post_id) {
+    if( function_exists('wpsc_delete_post_cache') ) wpsc_delete_post_cache($post_id);
   }
 
   /**

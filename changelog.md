@@ -1,6 +1,10 @@
+#### 1.3.8 (2022-02-04)
+
+- added `wpsc_delete_post_cache` on layout updates (#dcf3214)
+
 #### 1.3.7 (2022-02-03)
 
-- Add some more filters  - added `cancelDraggingSelector` filter - added `rhfl/message_database_updated` (#ce124c0)
+- Add some more filters  - added `cancelDraggingSelector` filter - added `rhfl/message_database_updated` (#2e0b87b)
 
 #### 1.3.6 (2022-02-03)
 
