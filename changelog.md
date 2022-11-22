@@ -1,6 +1,10 @@
+#### 1.3.9 (2022-11-22)
+
+- Add new API function `RHFL.initEditModeOnElement` (#a164291)
+
 #### 1.3.8 (2022-11-22)
 
-- Update browserslist (#d460867)
+- Update browserslist (#ca968d4)
 - added `wpsc_delete_post_cache` on layout updates (#a15fcc8)
 
 #### 1.3.7 (2022-02-03)
