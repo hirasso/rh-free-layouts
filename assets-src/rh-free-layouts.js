@@ -309,7 +309,7 @@ RHFL.initEditMode = (options) => new FreeLayoutsEditMode(options);
  * Allows to initialize the edit mode on an element.
  *
  * - Will give the element a unique data attribute
- * - Will feed this attribute to `FreeLayoutsEditMode` as the containerSelector and groupSelector
+ * - Will feed this attribute to `FreeLayoutsEditMode` as the containerSelector
  *
  * @since 1.3.9
  * @param {HTMLElement} el
