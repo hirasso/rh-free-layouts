@@ -28,7 +28,6 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "autoprefixer": "^9.7.6",
-    "caniuse-lite": "^1.0.30001245",
     "find-parent-dir": "^0.3.0",
     "glob": "^7.1.6",
     "minimist": "^1.2.5",

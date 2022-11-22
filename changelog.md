@@ -1,6 +1,7 @@
-#### 1.3.8 (2022-02-04)
+#### 1.3.8 (2022-11-22)
 
-- added `wpsc_delete_post_cache` on layout updates (#dcf3214)
+- Update browserslist (#d460867)
+- added `wpsc_delete_post_cache` on layout updates (#a15fcc8)
 
 #### 1.3.7 (2022-02-03)
 
