@@ -191,7 +191,6 @@ class FreeLayoutsEditMode {
     this.convertAndSaveLayoutItem($el);
     this.cleanupHelperElements();
     $el.trigger("layout:updated");
-    console.log($el);
   }
 
   /**

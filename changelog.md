@@ -1,6 +1,6 @@
 #### 1.3.9 (2022-11-22)
 
-- Allow re-initialization on same element for `initEditModeOnElement`. Use `uuid` for `data-rhfl-id` generation. (#7253fcc)
+- Allow re-initialization on same element for `initEditModeOnElement`. Use `uuid` for `data-rhfl-id` generation. (#93c3e47)
 - Add new API function `RHFL.initEditModeOnElement` (#44aa3cc)
 
 #### 1.3.8 (2022-11-22)
@@ -91,9 +91,8 @@
 - Fix draggable containment and API (#d1afb72)
 - v 1.2.0 (#869b929)
 
-#### 1.1.1 (2020-05-15)
+#### 1.1.1 (2020-05-14)
 
-- Huge cleanup (#e51c10e)
 - fix readme (#77cc94b)
 - update changelog (#6cdf2c5)
 - v 1.1.1 (#1d8bbb1)
@@ -119,7 +118,6 @@
 #### 1.0.0 (2020-04-29)
 
 - move script to the very end (#ce6e303)
-- cleanup (#a2399fc)
 - commit assets (#43d897a)
 - Support centered scaling (#245961c)
 - Support centered resizing on 'w' handle (#a82dba6)

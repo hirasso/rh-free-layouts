@@ -4,12 +4,12 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const changelogPath = './changelog.md';
 const pluginFiles = ['rh-free-layouts.php'];
-const blacklist = ['Merge branch ', 'prepare-commit-msg', 'pre-commit-msg', '#ignore'];
+const blacklist = ['Merge branch ', 'prepare-commit-msg', 'pre-commit-msg', '#ignore', 'cleanup'];
 
 
 /**
  * Get the plugin version from a file
- * @param {String} pluginFile 
+ * @param {String} pluginFile
  */
 function getPluginVersion( pluginFile ) {
   const matches = String(pluginFile).match(/^ \* Version: ([0-9|.].*)/m);
@@ -19,10 +19,10 @@ function getPluginVersion( pluginFile ) {
 
 /**
  * Add a commit message to the changelog
- * 
- * @param {string} pluginVersion 
- * @param {string} message 
- * @param {object} changelog 
+ *
+ * @param {string} pluginVersion
+ * @param {string} message
+ * @param {object} changelog
  */
 function addCommitMessageToChangelog( pluginVersion, message, changelog = {}, date = null ) {
   if( isMessageBlacklisted(message) ) return changelog;
@@ -36,7 +36,7 @@ function addCommitMessageToChangelog( pluginVersion, message, changelog = {}, da
 
 /**
  * Check if a message is in the blacklist
- * @param {string} message 
+ * @param {string} message
  */
 function isMessageBlacklisted(message) {
   for( const substring of blacklist ) {
@@ -49,7 +49,7 @@ function getCommits() {
   const delimiter = "----DELIMITER----";
   // https://git-scm.com/docs/pretty-formats
   const output = child.execSync(`git log --pretty=format:'%B###%H###%ad\n${delimiter}'`).toString('utf-8');
-  
+
   const commits = output.split(`\n${delimiter}`).map(commit => {
     let [message, hash, date] = commit.split('###');
     message = message.replace(/(?:\r\n|\r|\n)/g, ' ').trim();
@@ -59,9 +59,9 @@ function getCommits() {
 }
 
 /**
- * 
- * @param {string} file 
- * @param {string} commit 
+ *
+ * @param {string} file
+ * @param {string} commit
  */
 function fileExistsInCommit(file, hash) {
   try { child.execSync(`git cat-file -e ${hash}:${file} > /dev/null 2>&1`); return true; } catch(e) { return false; }
@@ -69,8 +69,8 @@ function fileExistsInCommit(file, hash) {
 
 /**
  * Get the main plugin file from a certain commit
- * 
- * @param {string} hash 
+ *
+ * @param {string} hash
  */
 function getPluginFileInCommit(hash) {
   for( const file of pluginFiles ) {
@@ -88,7 +88,7 @@ async function generateChangelog() {
   const commitsArray = getCommits();
   let changelog = {};
   let lastCommit = null;
-  
+
   for( const commit of Object.values(commitsArray) ) {
     // continue;
     let pluginFile = getPluginFileInCommit(commit.hash);
@@ -99,7 +99,7 @@ async function generateChangelog() {
     const date = new Date(commit.date).toISOString().split('T')[0];
     const shortHash = commit.hash.substr(0,7);
     const message = `${commit.message} (#${shortHash})`;
-    const pluginVersion = getPluginVersion( pluginFile ); 
+    const pluginVersion = getPluginVersion( pluginFile );
     if( !pluginVersion ) continue;
     changelog = addCommitMessageToChangelog( pluginVersion, message, changelog, date );
   }
@@ -108,7 +108,7 @@ async function generateChangelog() {
 
 /**
  * Write the changelog
- * @param {object} changelog 
+ * @param {object} changelog
  */
 async function writeChangelog( changelog ) {
   let file = '';
