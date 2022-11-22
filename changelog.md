@@ -1,6 +1,7 @@
 #### 1.3.9 (2022-11-22)
 
-- Add new API function `RHFL.initEditModeOnElement` (#a164291)
+- Allow re-initialization on same element for `initEditModeOnElement`. Use `uuid` for `data-rhfl-id` generation. (#7253fcc)
+- Add new API function `RHFL.initEditModeOnElement` (#44aa3cc)
 
 #### 1.3.8 (2022-11-22)
 

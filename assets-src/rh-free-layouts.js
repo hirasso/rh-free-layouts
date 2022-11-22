@@ -8,6 +8,7 @@ const $ = window.jQuery;
 
 import "./scss/rh-free-layouts.scss";
 import feather from "feather-icons";
+import { v4 as uuidv4 } from 'uuid';
 
 class FreeLayoutsEditMode {
   /**
@@ -190,6 +191,7 @@ class FreeLayoutsEditMode {
     this.convertAndSaveLayoutItem($el);
     this.cleanupHelperElements();
     $el.trigger("layout:updated");
+    console.log($el);
   }
 
   /**
@@ -299,8 +301,6 @@ class FreeLayoutsEditMode {
   }
 }
 
-RHFL.counter = 0;
-
 /**
  * Register for direct access to class
  */
@@ -323,22 +323,18 @@ RHFL.initEditModeOnElement = (el, _options) => {
     return;
   }
 
-  if (el.getAttribute("data-rhfl-id")) {
-    // console.log("RHFL: Prevented double-initialization on element:", el);
-    return;
-  }
+  const id = uuidv4();
+  el.setAttribute("data-rhfl-id", id);
 
-  el.setAttribute("data-rhfl-id", ++RHFL.counter);
-
-  const containerSelector = `[data-rhfl-id="${RHFL.counter}"]`;
+  const containerSelector = `[data-rhfl-id="${id}"]`;
 
   const defaults = {
     cancelDraggingSelector: "a",
+    groupSelector: 'body'
   };
 
   const overwrites = {
     containerSelector: containerSelector,
-    groupSelector: containerSelector,
   };
 
   const options = { ...defaults, ..._options, ...overwrites };

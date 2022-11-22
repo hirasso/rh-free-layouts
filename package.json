@@ -37,6 +37,7 @@
     "sass": "^1.26.5"
   },
   "dependencies": {
-    "feather-icons": "^4.28.0"
+    "feather-icons": "^4.28.0",
+    "uuid": "^9.0.0"
   }
 }
