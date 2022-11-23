@@ -141,7 +141,28 @@ class FreeLayoutsEditMode {
       pointerEvents: "none",
       background: "rgba(0,200,0,0.1)",
     });
-    $("body").append($containmentDiv);
+
+    // const $scrollParent = this.getScrollParent($el[0]);
+    // if (['', 'static'].includes($scrollParent.css('position'))) {
+    //   $scrollParent.css('position', 'relative');
+    // }
+
+    $('body').append($containmentDiv);
+  }
+
+  /**
+   * @see https://stackoverflow.com/a/35940276/586823
+   * @param {HTMLElement} node
+   * @returns jQuery
+   */
+  getScrollParent(el) {
+    const tagName = el.tagName.toLowerCase();
+    if (['html', 'body'].includes(tagName)) return $('body');
+
+    const overflowY = window.getComputedStyle(el).getPropertyValue('overflow-y');
+    if (['scroll', 'auto'].includes(overflowY)) return $(el);
+
+    return this.getScrollParent(el.parentNode);
   }
 
   /**

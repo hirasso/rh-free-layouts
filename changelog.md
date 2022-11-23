@@ -1,6 +1,6 @@
 #### 1.3.9 (2022-11-23)
 
-- Remove `initEditModeOnElement` in favor of the new  option `containerElement` (#bcde1e2)
+- Remove `initEditModeOnElement` in favor of the new  option `containerElement` (#fccc841)
 - Allow re-initialization on same element for `initEditModeOnElement`. Use `uuid` for `data-rhfl-id` generation. (#93c3e47)
 - Add new API function `RHFL.initEditModeOnElement` (#44aa3cc)
 
