@@ -8,7 +8,6 @@ const $ = window.jQuery;
 
 import "./scss/rh-free-layouts.scss";
 import feather from "feather-icons";
-import { v4 as uuidv4 } from 'uuid';
 
 class FreeLayoutsEditMode {
   /**
@@ -20,11 +19,26 @@ class FreeLayoutsEditMode {
       containerSelector: "body",
       groupSelector: "body",
       cancelDraggingSelector: "a",
+      containerElement: null,
     };
     this.options = { ...defaults, ...options };
 
-    this.$items = $(this.options.containerSelector).find(".free-layout_item");
+    this.$items = this.getItems();
+
     this.initEditMode();
+  }
+  /**
+   * Selects the items.
+   *
+   * the `options.containerElement` takes precendence over `options.containerSelector`
+   *
+   * @returns jQuery collection
+   */
+  getItems() {
+    if (this.options.containerElement instanceof HTMLElement) {
+      return $(".free-layout_item", this.options.containerElement);
+    }
+    return $(this.options.containerSelector).find(".free-layout_item");
   }
   /**
    * Inits the edit mode
@@ -304,39 +318,3 @@ class FreeLayoutsEditMode {
  * Register for direct access to class
  */
 RHFL.initEditMode = (options) => new FreeLayoutsEditMode(options);
-
-/**
- * Allows to initialize the edit mode on an element.
- *
- * - Will give the element a unique data attribute
- * - Will feed this attribute to `FreeLayoutsEditMode` as the containerSelector
- *
- * @since 1.3.9
- * @param {HTMLElement} el
- * @param {?object} _options
- * @returns
- */
-RHFL.initEditModeOnElement = (el, _options) => {
-  if (!el instanceof HTMLElement) {
-    console.warn(`RHFL.initEditModeOnElement: 'el' needs to a HTMLElement`);
-    return;
-  }
-
-  const id = uuidv4();
-  el.setAttribute("data-rhfl-id", id);
-
-  const containerSelector = `[data-rhfl-id="${id}"]`;
-
-  const defaults = {
-    cancelDraggingSelector: "a",
-    groupSelector: 'body'
-  };
-
-  const overwrites = {
-    containerSelector: containerSelector,
-  };
-
-  const options = { ...defaults, ..._options, ...overwrites };
-
-  return new FreeLayoutsEditMode(options);
-};
