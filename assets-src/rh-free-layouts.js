@@ -54,8 +54,8 @@ class FreeLayoutsEditMode {
 
       $el.find(".free-layout_item_handle").remove();
       $el.append(`<div class="free-layout_item_handle">
-        <a data-layout-action='full-width' href='#'>Full Width</a>
-        <a data-layout-action='reset' href='#'>Reset Layout</a>
+        <button data-layout-action='full-width' href='#'>Full Width</button>
+        <button data-layout-action='reset' href='#'>Reset Layout</button>
         </div>
       `);
       $el.attr("data-free-layout-index", index);

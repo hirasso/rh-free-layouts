@@ -1,3 +1,7 @@
+#### 1.4.0 (2023-10-10)
+
+- use buttons for layout handles (#7cdaf8c)
+
 #### 1.3.9 (2022-11-23)
 
 - Remove `initEditModeOnElement` in favor of the new  option `containerElement` (#fccc841)
