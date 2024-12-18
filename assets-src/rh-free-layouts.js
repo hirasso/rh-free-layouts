@@ -53,9 +53,9 @@ class FreeLayoutsEditMode {
       }
 
       $el.find(".free-layout_item_handle").remove();
-      $el.append(`<div class="free-layout_item_handle">
-        <button data-layout-action='full-width' href='#'>Full Width</button>
-        <button data-layout-action='reset' href='#'>Reset Layout</button>
+      $el.append(/*html*/ `<div class="free-layout_item_handle">
+        <button type="button" data-layout-action="full-width" href="#" tabindex="-1">Full Width</button>
+        <button type="button" data-layout-action="reset" href='#' tabindex="-1">Reset Layout</button>
         </div>
       `);
       $el.attr("data-free-layout-index", index);
@@ -147,7 +147,7 @@ class FreeLayoutsEditMode {
     //   $scrollParent.css('position', 'relative');
     // }
 
-    $('body').append($containmentDiv);
+    $("body").append($containmentDiv);
   }
 
   /**
@@ -157,10 +157,12 @@ class FreeLayoutsEditMode {
    */
   getScrollParent(el) {
     const tagName = el.tagName.toLowerCase();
-    if (['html', 'body'].includes(tagName)) return $('body');
+    if (["html", "body"].includes(tagName)) return $("body");
 
-    const overflowY = window.getComputedStyle(el).getPropertyValue('overflow-y');
-    if (['scroll', 'auto'].includes(overflowY)) return $(el);
+    const overflowY = window
+      .getComputedStyle(el)
+      .getPropertyValue("overflow-y");
+    if (["scroll", "auto"].includes(overflowY)) return $(el);
 
     return this.getScrollParent(el.parentNode);
   }

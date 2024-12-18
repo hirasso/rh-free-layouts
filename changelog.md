@@ -1,6 +1,10 @@
+#### 1.4.1 (2024-12-18)
+
+- Optimize A11Y (#17e08db)
+
 #### 1.4.0 (2023-10-10)
 
-- use buttons for layout handles (#7cdaf8c)
+- use buttons for layout handles (#288881d)
 
 #### 1.3.9 (2022-11-23)
 
