@@ -1,3 +1,5 @@
+# Changelog
+
 #### 1.4.1 (2024-12-18)
 
 - Optimize A11Y (#17e08db)
