@@ -3,8 +3,9 @@
 /.githooks export-ignore
 /.gitignore export-ignore
 /assets-src export-ignore
-/package-lock.json export-ignore
+/build.mjs export-ignore
 /package.json export-ignore
-/parcel-bundler.js export-ignore
+/pnpm-lock.yaml export-ignore
+/pnpm-workspace.yaml export-ignore
 /readme.md export-ignore
 /release.sh export-ignore

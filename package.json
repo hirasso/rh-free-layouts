@@ -6,38 +6,32 @@
   "main": "index.js",
   "scripts": {
     "prepare": "git config core.hooksPath .githooks || true",
-    "bundle": "node parcel-bundler.js -f \"assets-src/*.js\" -o \"assets\"",
-    "watch": "npm run bundle",
-    "build": "npm run bundle -- --production"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  },
-  "watchreload": {
-    "files": "**/*.php"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": true
-    }
+    "bundle": "node build.mjs \"assets-src/*.js\" -o \"assets\"",
+    "watch": "pnpm bundle",
+    "build": "pnpm bundle --production"
   },
   "author": "Rasso Hilber",
   "license": "ISC",
+  "engines": {
+    "node": ">=22"
+  },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "autoprefixer": "^9.7.6",
-    "find-parent-dir": "^0.3.0",
-    "glob": "^7.1.6",
-    "minimist": "^1.2.5",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-watch-reload": "^1.0.0",
-    "rimraf": "^3.0.2",
-    "sass": "^1.26.5"
+    "browserslist": "^4.29.4",
+    "esbuild": "^0.28.2",
+    "esbuild-plugin-browserslist": "^4.0.0",
+    "postcss": "^8.5.31",
+    "postcss-preset-env": "^11.6.1",
+    "sass": "^1.106.1"
   },
   "dependencies": {
-    "feather-icons": "^4.28.0",
-    "uuid": "^9.0.0"
-  }
+    "feather-icons": "^4.28.0"
+  },
+  "browserslist": [
+    "chrome >= 100",
+    "edge >= 100",
+    "firefox >= 100",
+    "safari >= 15",
+    "ios >= 15"
+  ],
+  "packageManager": "pnpm@12.4.2"
 }

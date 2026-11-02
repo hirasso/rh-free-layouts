@@ -78,7 +78,7 @@ mv "$CHANGELOG.tmp" "$CHANGELOG"
 sed -i.bak -E "s/^( \* Version: ).*/\1$version/" "$PLUGIN_FILE" && rm "$PLUGIN_FILE.bak"
 grep -q "^ \* Version: $version$" "$PLUGIN_FILE" || die "Failed to bump version in $PLUGIN_FILE"
 
-npm run build
+pnpm build
 
 git add "$PLUGIN_FILE" "$CHANGELOG" assets
 # --no-verify: assets were just built, skip the pre-commit hook building them again
