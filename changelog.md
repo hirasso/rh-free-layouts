@@ -1,5 +1,11 @@
 # Changelog
 
+#### 1.5.0 (2026-11-02)
+
+- Add composer.json for installs via Packagist (hirasso/rh-free-layouts) (#36fcdce)
+- Bundle plugin-update-checker, attach rh-free-layouts.zip to releases (#33881d7)
+- Migrate build from Parcel to esbuild, switch to pnpm (#a140497)
+
 #### 1.4.1 (2024-12-18)
 
 - Optimize A11Y (#17e08db)
