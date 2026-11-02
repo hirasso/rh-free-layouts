@@ -5,6 +5,7 @@
  * Author: Rasso Hilber
  * Description: Free drag-and-drop layouts
  * Author URI: https://rassohilber.com
+ * Requires PHP: 7.4
  **/
 
 

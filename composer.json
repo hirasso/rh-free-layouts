@@ -1,0 +1,22 @@
+{
+  "name": "hirasso/rh-free-layouts",
+  "description": "Free drag-and-drop layouts for ACF Flexible Content and Repeater fields",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/hirasso/rh-free-layouts",
+  "authors": [
+    {
+      "name": "Rasso Hilber",
+      "email": "mail@rassohilber.com",
+      "homepage": "https://rassohilber.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "composer/installers": "^1.0 || ^2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
+}

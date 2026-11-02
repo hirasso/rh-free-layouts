@@ -53,6 +53,7 @@ Usage, setup, commands and release: `README.md`. This file only adds what agents
 | `assets/` | Built assets (committed, generated) |
 | `build.mjs` | esbuild build script |
 | `release.sh` | Release script (see README) |
+| `composer.json` | Packagist package `hirasso/rh-free-layouts` (no PHP deps besides `composer/installers`) |
 | `changelog.md` | Changelog, written by `release.sh` |
 
 ## Agent skills

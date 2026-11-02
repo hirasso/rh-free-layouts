@@ -5,6 +5,7 @@
 /.gitignore export-ignore
 /assets-src export-ignore
 /build.mjs export-ignore
+/composer.json export-ignore
 /package.json export-ignore
 /pnpm-lock.yaml export-ignore
 /pnpm-workspace.yaml export-ignore

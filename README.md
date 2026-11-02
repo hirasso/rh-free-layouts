@@ -4,6 +4,19 @@ Free drag-and-drop layouts for ACF Flexible Content and Repeater fields.
 
 ## Installation
 
+### Via Composer (recommended)
+
+```shell
+composer require hirasso/rh-free-layouts
+```
+
+#### Update via Composer
+
+```shell
+# latest version, including major version jumps
+composer require hirasso/rh-free-layouts
+```
+
 ### Via WP CLI
 
 ```shell
