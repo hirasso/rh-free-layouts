@@ -1,6 +1,7 @@
 # Excluded from release zips (git archive)
 /.gitattributes export-ignore
 /.githooks export-ignore
+/.github export-ignore
 /.gitignore export-ignore
 /assets-src export-ignore
 /build.mjs export-ignore
