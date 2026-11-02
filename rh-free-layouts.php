@@ -11,6 +11,9 @@
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 require_once(__DIR__ . '/inc/class.singleton.php');
+require_once(__DIR__ . '/inc/class.update-checker.php');
+
+RHFLUpdateChecker::init(__FILE__);
 
 class RHFreeLayouts extends RHSingleton
 {

@@ -38,6 +38,7 @@ Usage, setup, commands and release: `README.md`. This file only adds what agents
 ## Do not touch without explicit request
 
 - Releasing (`./release.sh`), tags, GitHub releases
+- `lib/plugin-update-checker/` (unmodified upstream copy, see README)
 - No commits without explicit request
 - do not edit TODO files
 
@@ -46,7 +47,8 @@ Usage, setup, commands and release: `README.md`. This file only adds what agents
 | Path | Purpose |
 |------|---------|
 | `rh-free-layouts.php` | Plugin entry, main class `RHFreeLayouts` (singleton, `rhfl()`) |
-| `inc/` | ACF field types (`Free Layout`, `Reset Free Layouts`), `RHSingleton` base |
+| `inc/` | ACF field types (`Free Layout`, `Reset Free Layouts`), `RHSingleton` base, `RHFLUpdateChecker` |
+| `lib/plugin-update-checker/` | Bundled plugin-update-checker (updates from GitHub releases) |
 | `assets-src/` | JS + SCSS sources |
 | `assets/` | Built assets (committed, generated) |
 | `build.mjs` | esbuild build script |
