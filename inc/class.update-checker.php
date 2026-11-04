@@ -26,6 +26,9 @@ class RHFLUpdateChecker
 
     $checker->setBranch('main');
 
+    /** Remove PUC hooks before the plugin files get deleted */
+    register_deactivation_hook($entry_point, [$checker, 'removeHooks']);
+
     if ($token = self::get_github_token()) {
       $checker->setAuthentication($token);
     }
