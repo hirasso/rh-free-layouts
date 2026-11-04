@@ -1,5 +1,9 @@
 # Changelog
 
+#### 1.5.1 (2026-11-04)
+
+- Remove update checker hooks on deactivation (#9dce239)
+
 #### 1.5.0 (2026-11-02)
 
 - Add composer.json for installs via Packagist (hirasso/rh-free-layouts) (#36fcdce)
